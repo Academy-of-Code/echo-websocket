@@ -12,13 +12,24 @@ const server = express()
 
 const wss = new Server({ server });
 
+const clientNameArr = ['John','Billy','Harold','Dillion','Dylan','Nemo','Car Guy','Computor Geek','NerdMan2000','xX_PinkUnicorns_Xx']
+
 wss.on('connection', (ws) => {
+  var clientName = clientNameArr[randomInt(0,clientNameArr.length)]
+  
   console.log('Client connected');
   ws.on('close', () => console.log('Client disconnected'));
+  ws.on('message', () function(event) {
+    sendToAllClient(clientName+": "+vent.data)
+  });
+  
 });
 
-setInterval(() => {
+function sendToAllClients(msg){
   wss.clients.forEach((client) => {
-    client.send(new Date().toTimeString());
+    client.send(msg)
   });
-}, 1000);
+}
+function randomInt(min, max) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
