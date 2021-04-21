@@ -17,16 +17,18 @@ const clientNameArr = ['John','Billy','Harold','Dillion','Dylan','Nemo','Car Guy
 wss.on('connection', (ws) => {
   var clientName = clientNameArr[randomInt(0,clientNameArr.length)]
   
-  console.log('Client connected');
+  console.log('Client *'+clientName+'* connected');
   ws.on('close', () => console.log('Client disconnected'));
   ws.on('message', () => function(){
     sendToAllClients(clientName+' has send a message!')
+    console.log(clientName+' has send a message!')
   });
 });
 
 function sendToAllClients(msg){
   wss.clients.forEach((client) => {
     client.send(msg)
+    return(msg)
   });
 }
 function randomInt(min, max) { // min and max included 
