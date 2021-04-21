@@ -13,5 +13,7 @@
   </head>
   <body>
     <p id="server-time"></p>
+    <textarea id="msgInput"></textarea>
+    <button id='sendMsg' onclick='ws.send(document.getElementById("msgInput").innerHTML)'>Send message</button>
   </body>
 </html>
