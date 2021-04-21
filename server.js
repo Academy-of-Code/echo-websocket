@@ -20,7 +20,7 @@ wss.on('connection', (ws) => {
   console.log('Client connected');
   ws.on('close', () => console.log('Client disconnected'));
   ws.on('message', () function(event) {
-    sendToAllClient(clientName+": "+vent.data)
+    sendToAllClient(clientName+": "+event.data)
   });
   
 });
