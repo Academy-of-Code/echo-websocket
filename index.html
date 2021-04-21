@@ -4,12 +4,26 @@
       let HOST = 'wss://echo-websocket-ms.herokuapp.com/'
       let ws = new WebSocket(HOST);
       let el;
+      
+      function heartbeat(){
+        clearTimeout(this.pingTimeout);
+        
+        this.pingTimeout = setTimeout(() => {
+          this.terminate();
+        }, 30000 + 1000);
+      }
 
+      ws.on('open', heartbeat);
+      ws.on('ping', heartbeat);
+      ws.on('close', function clear() {
+        clearTimeout(this.pingTimeout);
+      });
+      
       ws.onmessage = (event) => {
         el = document.getElementById('server-time');
         if(event.data==='SERVER-KICK'){
           ws.close();
-          alert('Sorry, but you have been banned from this server! If you feel this is a mistake contact the creator of this game *Gameshub support team*');
+          alert('Sorry, but you have been kicked from this server! If you feel this is a mistake contact the creator of this game *Gameshub support team*');
         }
         else{
           el.innerHTML = event.data;
