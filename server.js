@@ -13,12 +13,9 @@ const server = express()
 const wss = new Server({ server });
 
 const clientNameArr = ['John','Billy','Harold','Dillion','Dylan','Nemo','Car Guy','Computor Geek','NerdMan2000','xX_PinkUnicorns_Xx']
-var bannedIps = ['null']
 
 wss.on('connection', (ws) => {
   var clientName = clientNameArr[randomInt(0,clientNameArr.length)]
-  const clientIP = req.socket.removeAddress
-  if(checkBannedIps(clientIP)===403){ws.send('SERVER-KICK')}
   
   console.log('Client *'+clientName+'* connected');
   ws.on('close', () => console.log('Client disconnected'));
@@ -33,13 +30,6 @@ function sendToAllClients(msg){
     client.send(msg)
     return(msg)
   });
-}
-function checkBannedIps(ip){
-  for(var x=0;x<bannedIps.length;x++){
-    var compareIp = bannedIps[x]
-    if(ip!==compareIp){}
-    else{return(403)}
-  }
 }
 function randomInt(min, max) { // min and max included 
   return Math.floor(Math.random() * (max - min + 1) + min);
