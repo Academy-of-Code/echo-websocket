@@ -16,6 +16,7 @@ const clientNameArr = ['John','Billy','Harold','Dillion','Dylan','Nemo','Car Guy
 
 wss.on('connection', (ws) => {
   var clientName = clientNameArr[randomInt(0,clientNameArr.length)]
+  console.log(ws)
   
   console.log('Client *'+clientName+'* connected');
   ws.on('close', () => console.log('Client disconnected'));
