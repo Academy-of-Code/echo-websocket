@@ -1,7 +1,7 @@
 <html>
   <head>
     <script>
-      let HOST = location.origin.replace(/^http/, 'ws')
+      let HOST = 'wss://echo-websocket-ms.herokuapp.com/'
       let ws = new WebSocket(HOST);
       let el;
 
@@ -14,6 +14,6 @@
   <body>
     <p id="server-time"></p>
     <textarea id="msgInput"></textarea>
-    <button id='sendMsg' onclick='ws.send(document.getElementById("msgInput").value)'>Send message</button>
+    <button id='sendMsg' onclick='if(document.getElementById("msgInput").value !== ""){ws.send(document.getElementById("msgInput").value)}'>Send message</button>
   </body>
 </html>
