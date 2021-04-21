@@ -19,10 +19,7 @@ wss.on('connection', (ws) => {
   
   console.log('Client *'+clientName+'* connected');
   ws.on('close', () => console.log('Client disconnected'));
-  ws.on('message', () => function(){
-    sendToAllClients(clientName+' has send a message!')
-    console.log(clientName+' has send a message!')
-  });
+  ws.on('message', () => sendToAllClients(clientName+' has send a message!');console.log());
 });
 
 function sendToAllClients(msg){
@@ -30,6 +27,10 @@ function sendToAllClients(msg){
     client.send(msg)
     return(msg)
   });
+}
+function messageSender(msg){
+  sendToAllClients(msg);
+  console.log(msg);
 }
 function randomInt(min, max) { // min and max included 
   return Math.floor(Math.random() * (max - min + 1) + min);
