@@ -38,6 +38,8 @@
       
       const pixelSize = 5
       
+      var inGame = false
+      
       var playersArr = []
       
       function nextFrame(){
@@ -81,6 +83,8 @@
         console.log(e.keyCode)
       }
       
+      function loadMenu(){}
+      
       function move(dir){
       	if(dir==='up'){ws.send('RES-MOVE_UP');}
         else if(dir==='down'){ws.send('RES-MOVE_DOWN');}
@@ -89,11 +93,12 @@
       }
       function run(){
         setInterval(function(){
-        	nextFrame()
-        	for(var x=0;x<playersArr.length;x++){
-          	var player = playersArr[x]
+          nextFrame()
+          for(var x=0;x<playersArr.length;x++){
+            var player = playersArr[x]
             loadPlayer(player)
           }
+          if(inGame===false){loadMenu()}
         },1)
       }
       run()
