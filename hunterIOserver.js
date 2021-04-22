@@ -20,7 +20,9 @@ wss.on('connection', (ws) => {
   
   console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
-    
+    if(message.startsWith('JOIN')){
+      
+    }
   })
   
   ws.on('close', function close() {
