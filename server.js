@@ -30,7 +30,7 @@ wss.on('connection', (ws) => {
   
   ws.on('close', function close() {
     console.log('Client *'+clientId+'* disconnected')
-    playersArr.splice(playerArr.findIndex(clientId),1)
+    playersArr.splice(playersArr.findIndex(clientId),1)
   });
   ws.on('pong', heartbeat);
 });
