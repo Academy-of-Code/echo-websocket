@@ -41,7 +41,7 @@ var playerDataSender = setInterval(function sendData() {
   wss.clients.forEach(function each(ws) {
     ws.send( JSON.stringify(playersArr) )
   });
-}, 1000);
+}, 1);
 
 const interval  = setInterval(function ping() {
   wss.clients.forEach(function each(ws) {
