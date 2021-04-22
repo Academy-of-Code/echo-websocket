@@ -13,9 +13,16 @@
           this.terminate()
         }, 30000);
       }
+      
+      var enterName = false
       ws.onmessage = function incoming(data) {
         var msg = data.data
         playersArr = JSON.parse(msg);
+        if(enterName===false){
+        	var name = window.prompt('Please enter your name!');
+        	ws.send('NAME-'+name);
+          if(name===""&&name.length<=16&&name===undefined&&name===null){enterName=false;}else{enterName=true;}
+        }
         //console.log( JSON.parse(msg) )
       }
       
@@ -51,8 +58,13 @@
         }
         ctx.fillRect(x,y,pixelSize,pixelSize)
       }
+      function paintText(txt,x,y,txtSize){
+      	ctx.font = txtSize+"px Arial";
+        ctx.fillText(txt,x,y)
+      }
       function loadPlayer(player){
       	paintPixel(player.x,player.y)
+        paintText(player.name,player.x-player.name.length-5,player.y-10,12)
       }
       document.onkeypress = function (e) {
       	e = e || window.event
