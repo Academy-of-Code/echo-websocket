@@ -24,6 +24,7 @@ wss.on('connection', (ws) => {
   ws.on('message', function incoming(message) {
     if(message==='GET-PLAYERS'){
       ws.send( JSON.stringify(playersArr) )
+      console.log(JSON.stringify(playersArr))
     }
     else{console.log(message)}
   })
