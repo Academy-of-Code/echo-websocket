@@ -12,13 +12,18 @@ const server = express()
 
 const wss = new Server({ server });
 
+var playersArr = []
+
 wss.on('connection', (ws) => {
   ws.isAlive = true;
   var clientId = randomId(16);
   
   console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
-    console.log(message);
+    if(message==='GET-PLAYERS'){
+      ws.send( JSON.stringify(playersArr) )
+    }
+    else{console.log(message)}
   })
   
   ws.on('close', () => console.log('Client disconnected'));
