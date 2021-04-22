@@ -13,12 +13,24 @@ const server = express()
 const wss = new Server({ server });
 
 wss.on('connection', (ws) => {
+  ws.isAlive = true;
   console.log('Client connected');
   ws.on('close', () => console.log('Client disconnected'));
+  ws.on('pong', heartbeat);
 });
+wss.on('close', function close() {
+  clearInterval(interval);
+})
 
-setInterval(() => {
-  wss.clients.forEach((client) => {
-    client.send(new Date().toTimeString());
+const interval  = setInterval(function ping() {
+  wss.clients.forEach(function each(ws) {
+    if (ws.isAlive === false) return ws.terminate();
+    
+    ws.isAlive = false;
+    ws.ping(noop);
   });
-}, 1000);
+}, 30000);
+function noop(){}
+function heartbeat(){
+  this.isAlive = true;
+}
