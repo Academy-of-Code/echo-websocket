@@ -14,7 +14,13 @@ const wss = new Server({ server });
 
 wss.on('connection', (ws) => {
   ws.isAlive = true;
+  var clientId = randomId(16);
+  
   console.log('Client connected');
+  ws.on('messgae', function incoming(message) {
+    console.log(message);
+  })
+  
   ws.on('close', () => console.log('Client disconnected'));
   ws.on('pong', heartbeat);
 });
@@ -30,6 +36,19 @@ const interval  = setInterval(function ping() {
     ws.ping(noop);
   });
 }, 30000);
+function randomId(length) {
+    var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'.split('');
+
+    if (! length) {
+        length = Math.floor(Math.random() * chars.length);
+    }
+
+    var str = '';
+    for (var i = 0; i < length; i++) {
+        str += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return str;
+}
 function noop(){}
 function heartbeat(){
   this.isAlive = true;
