@@ -25,19 +25,19 @@ wss.on('connection', (ws) => {
   ws.on('message', function incoming(message) {
     if(message==='RES-MOVE_UP'){
       var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].y+=5
+      playersArr[index].y-=5
     }
     else if(message==='RES-MOVE_DOWN'){
       var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].y-=5
+      playersArr[index].y+=5
     }
     else if(message==='RES-MOVE_LEFT'){
       var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].x+=5
+      playersArr[index].x-=5
     }
     else if(message==='RES-MOVE_RIGHT'){
       var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].x-=5
+      playersArr[index].x+=5
     }
     ws.send( JSON.stringify(playersArr) )
   })
