@@ -21,7 +21,7 @@
       ws.onmessage = (event) => {
         el = document.getElementById('server-time');
         var msg = event.data
-        if(msg.startsWith('[')){
+        if(msg.startsWith('[')||msg.startsWith('{')){
           playersArr = JSON.parse(event.data)
         }
         el.innerHTML = 'Server time: ' + event.data;
