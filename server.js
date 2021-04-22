@@ -39,6 +39,7 @@ wss.on('connection', (ws) => {
       var index = playerArr.findIndex(function(item,i){return item.id===clientId})
       playerArr[index].x-=5
     }
+    ws.send( JSON.stringify(playersArr) )
   })
   
   ws.on('close', function close() {
