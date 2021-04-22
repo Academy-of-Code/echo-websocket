@@ -1,5 +1,6 @@
 <html>
   <head>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
       let HOST = 'wss://echo-websocket-ms.herokuapp.com'
       let ws = new WebSocket(HOST);
@@ -53,25 +54,25 @@
       function loadPlayer(player){
       	paintPixel(player.x,player.y)
       }
-      
-      document.addEventListener("keypress", function(event) {
-        if (event.keyCode == 87 || event.keycode == 38) {
+      document.onkeypress = function (e) {
+      	e = e || window.event
+        if (e.keyCode == 119) {
           // Up
           move('up');
         }
-        else if(event.keycode == 83 || event.keycode == 40) {
+        else if(e.keyCode == 115) {
         	// DOwn
           move('down');
         }
-        else if(event.keycode == 65 || event.keycode == 37) {
+        else if(e.keyCode == 114) {
         	// left
           move('left');
         }
-        else if(event.keycode == 68 || event.keycode == 39) {
+        else if(e.keyCode == 100) {
         	// Right
           move('right');
         }
-      });
+      }
       
       function move(dir){
       	if(dir==='up'){ws.send('RES-MOVE_UP');}
