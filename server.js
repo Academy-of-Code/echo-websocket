@@ -24,20 +24,20 @@ wss.on('connection', (ws) => {
   console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
     if(message==='RES-MOVE_UP'){
-      var index = playerArr.findIndex(function(item,i){return item.id===clientId})
-      playerArr[index].y+=5
+      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
+      playersArr[index].y+=5
     }
     else if(message==='RES-MOVE_DOWN'){
-      var index = playerArr.findIndex(function(item,i){return item.id===clientId})
-      playerArr[index].y-=5
+      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
+      playersArr[index].y-=5
     }
     else if(message==='RES-MOVE_LEFT'){
-      var index = playerArr.findIndex(function(item,i){return item.id===clientId})
-      playerArr[index].x+=5
+      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
+      playersArr[index].x+=5
     }
     else if(message==='RES-MOVE_RIGHT'){
-      var index = playerArr.findIndex(function(item,i){return item.id===clientId})
-      playerArr[index].x-=5
+      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
+      playersArr[index].x-=5
     }
     ws.send( JSON.stringify(playersArr) )
   })
