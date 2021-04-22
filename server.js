@@ -23,11 +23,8 @@ wss.on('connection', (ws) => {
   
   console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
-    if(message==='GET-PLAYERS'){
-      ws.send( JSON.stringify(playersArr) )
-      console.log(JSON.stringify(playersArr))
-    }
-    else{console.log(message)}
+    ws.send(JSON.stringify(playersArr))
+    console.log('Sent playersArr to *'+clientId+'*')
   })
   
   ws.on('close', function close() {
