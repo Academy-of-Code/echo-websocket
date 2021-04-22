@@ -12,21 +12,17 @@
           this.terminate()
         }, 30000);
       }
+      ws.onmessage = function incoming(data) {
+        var msg = data.data
+        playersArr = JSON.parse(msg);
+        //console.log( JSON.parse(msg) )
+      }
+      
       ws.on('open', heartbeat);
       ws.on('ping', heartbeat);
       ws.on('close', function close() {
         clearTimeout(this.pingTimeout);
       })
-      
-      ws.onmessage = (event) => {
-        el = document.getElementById('server-time');
-        var msg = event.data
-        if(msg.startsWith('[')||msg.startsWith('{')){
-          playersArr = JSON.parse(event.data)
-        }
-        console.log(msg)
-        el.innerHTML = 'Server time: ' + event.data;
-      };
     </script>
     <style>
       #game{ border: 1px solid black; }
@@ -54,9 +50,24 @@
         }
         ctx.fillRect(x,y,pixelSize,pixelSize)
       }
-      function sendPlayerRequest(){
-        ws.send('GET-PLAYERS')
+      function loadPlayer(player){
+      	paintPixel(player.x,player.y)
       }
+      function move(dir){
+      	if(dir==='up'){ws.send('RES-MOVE_UP');}
+        else if(dir==='down'){ws.send('RES-MOVE_DOWN');}
+        else if(dir==='left'){ws.send('RES-MOVE_LEFT');}
+        else if(dir==='right'){ws.send('RES-MOVE_RIGHT');}
+      }
+      function run(){
+        setInterval(function(){
+        	for(var x=0;x<playersArr.length;x++){
+          	var player = playersArr[x]
+            loadPlayer(player)
+          }
+        },1)
+      }
+      run()
     </script>
   </body>
 </html>
