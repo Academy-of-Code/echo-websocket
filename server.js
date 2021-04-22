@@ -12,57 +12,25 @@ const server = express()
 
 const wss = new Server({ server });
 
-var playersArr = []
+var roomsArr = []
 
 wss.on('connection', (ws) => {
   ws.isAlive = true;
   var clientId = randomId(16);
-  playersArr.push( {x:0,y:0,id:clientId} );
-  
-  console.log( JSON.stringify(playersArr) );
   
   console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
-    if(message.startsWith('NAME')){
-      var name = message.split('-')[1];
-      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].name=name
-      console.log('Client *'+clientId+'* has chosen its name and it is: '+name)
-    }
-    else if(message==='RES-MOVE_UP'){
-      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].y-=5
-    }
-    else if(message==='RES-MOVE_DOWN'){
-      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].y+=5
-    }
-    else if(message==='RES-MOVE_LEFT'){
-      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].x-=5
-    }
-    else if(message==='RES-MOVE_RIGHT'){
-      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].x+=5
-    }
-    ws.send( JSON.stringify(playersArr) )
+    
   })
   
   ws.on('close', function close() {
     console.log('Client *'+clientId+'* disconnected')
-    playersArr.splice( playersArr.findIndex(function(item, i){return item.id===clientId}) ,1)
   });
   ws.on('pong', heartbeat);
 });
 wss.on('close', function close() {
   clearInterval(interval);
 })
-
-var playerDataSender = setInterval(function sendData() {
-  wss.clients.forEach(function each(ws) {
-    ws.send( JSON.stringify(playersArr) )
-  });
-}, 1);
 
 const interval  = setInterval(function ping() {
   wss.clients.forEach(function each(ws) {
@@ -86,11 +54,6 @@ function randomId(length) {
     return str;
 }
 function noop(){}
-function player(x,y,id){
-  this.x = x
-  this.y = y
-  this.id = id
-}
 function heartbeat(){
   this.isAlive = true;
 }
