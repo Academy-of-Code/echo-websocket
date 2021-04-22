@@ -19,6 +19,7 @@ wss.on('connection', (ws) => {
   var clientId = randomId(16);
   var playerAddent = new player(0,0,clientId);
   playersArr.push(playerAddent);
+  console.log(data)
   
   console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
@@ -31,7 +32,7 @@ wss.on('connection', (ws) => {
   
   ws.on('close', function close() {
     console.log('Client *'+clientId+'* disconnected')
-    playersArr.splice(playersArr.findIndex(clientId),1)
+    playersArr.splice( playersArr.findIndex(function(item, i){return item.id===clientId}) ,1)
   });
   ws.on('pong', heartbeat);
 });
