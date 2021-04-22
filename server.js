@@ -17,9 +17,9 @@ var playersArr = []
 wss.on('connection', (ws) => {
   ws.isAlive = true;
   var clientId = randomId(16);
-  var playerAddent = new player(0,0,clientId);
- // playersArr.push(playerAddent);
-  console.log(new player(0,0,clientId))
+  playersArr.push( {x:0,y:0,id:clientId} );
+  
+  console.log( JSON.stringify(playersArr) );
   
   console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
