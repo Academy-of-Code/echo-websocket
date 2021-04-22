@@ -18,7 +18,7 @@ wss.on('connection', (ws) => {
   ws.isAlive = true;
   var clientId = randomId(16);
   var playerAddent = new player(0,0,clientId);
-  playersArr.push(playerAddent);
+ // playersArr.push(playerAddent);
   console.log(new player(0,0,clientId))
   
   console.log('Client *'+clientId+'* connected');
@@ -44,7 +44,7 @@ var playerDataSender = setInterval(function sendData() {
   wss.clients.forEach(function each(ws) {
     ws.send( JSON.parse(playersArr) )
   });
-})
+}, 30000);
 
 const interval  = setInterval(function ping() {
   wss.clients.forEach(function each(ws) {
