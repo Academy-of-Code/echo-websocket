@@ -20,7 +20,8 @@
       });
       ws.on('message', function incoming(data) {
         el = document.getElementById('server-time');
-        el.innerHTML = event.data;
+        alert(data)
+        el.innerHTML = data;
       });
     </script>
   </head>
