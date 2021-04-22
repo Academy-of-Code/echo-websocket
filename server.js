@@ -26,7 +26,8 @@ wss.on('connection', (ws) => {
     if(message.startsWith('NAME')){
       var name = message.split('-')[1];
       var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].name-=name
+      playersArr[index].name=name
+      console.log('Client *'+clientId+'* has chosen its name and it is: '+name)
     }
     else if(message==='RES-MOVE_UP'){
       var index = playersArr.findIndex(function(item,i){return item.id===clientId})
