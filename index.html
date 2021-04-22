@@ -17,13 +17,7 @@
       var enterName = false
       ws.onmessage = function incoming(data) {
         var msg = data.data
-        playersArr = JSON.parse(msg);
-        if(enterName===false){
-        	var name = window.prompt('Please enter your name!');
-        	ws.send('NAME-'+name);
-          if(name===""&&name.length<=16&&name===undefined&&name===null){enterName=false;}else{enterName=true;}
-        }
-        //console.log( JSON.parse(msg) )
+        
       }
       
       ws.on('open', heartbeat);
