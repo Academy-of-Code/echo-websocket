@@ -18,11 +18,10 @@
       ws.on('close', function clear() {
         clearTimeout(this.pingTimeout);
       });
-      
-      ws.onmessage = (event) => {
+      ws.on('message', function incoming(data) {
         el = document.getElementById('server-time');
         el.innerHTML = event.data;
-      };
+      });
     </script>
   </head>
   <body>
