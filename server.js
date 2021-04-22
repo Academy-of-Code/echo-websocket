@@ -20,8 +20,8 @@ wss.on('connection', (ws) => {
   var playerAddent = new player(0,0,clientId);
   playersArr.push(playerAddent);
   
-  console.log("PlayersArr: "+playersArr);
-  console.log("PlayerAddent"+playerAddent);
+  console.log("PlayersArr: "+JSON.parse(playersArr));
+  console.log("PlayerAddent: "+JSON.parse(playerAddent));
   
   console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
