@@ -19,9 +19,7 @@ wss.on('connection', (ws) => {
   var clientId = randomId(16);
   var playerAddent = new player(0,0,clientId);
   playersArr.push(playerAddent);
-  
-  console.log("PlayersArr: "+JSON.parse(playersArr));
-  console.log("PlayerAddent: "+JSON.parse(playerAddent));
+  console.log(new player(0,0,clientId))
   
   console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
@@ -40,6 +38,12 @@ wss.on('connection', (ws) => {
 });
 wss.on('close', function close() {
   clearInterval(interval);
+})
+
+var playerDataSender = setInterval(function sendData() {
+  wss.clients.forEach(function each(ws) {
+    ws.send( JSON.parse(playersArr) )
+  });
 })
 
 const interval  = setInterval(function ping() {
