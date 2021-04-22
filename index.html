@@ -53,6 +53,26 @@
       function loadPlayer(player){
       	paintPixel(player.x,player.y)
       }
+      
+      document.addEventListener("keypress", function(event) {
+        if (event.keyCode == 87 || event.keycode == 38) {
+          // Up
+          move('up');
+        }
+        else if(event.keycode == 83 || event.keycode == 40) {
+        	// DOwn
+          move('down');
+        }
+        else if(event.keycode == 65 || event.keycode == 37) {
+        	// left
+          move('left');
+        }
+        else if(event.keycode == 68 || event.keycode == 39) {
+        	// Right
+          move('right');
+        }
+      });
+      
       function move(dir){
       	if(dir==='up'){ws.send('RES-MOVE_UP');}
         else if(dir==='down'){ws.send('RES-MOVE_DOWN');}
