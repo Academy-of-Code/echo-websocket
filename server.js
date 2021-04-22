@@ -42,9 +42,9 @@ wss.on('close', function close() {
 
 var playerDataSender = setInterval(function sendData() {
   wss.clients.forEach(function each(ws) {
-    ws.send( JSON.parse(playersArr) )
+    ws.send( JSON.stringify(playersArr) )
   });
-}, 30000);
+}, 1000);
 
 const interval  = setInterval(function ping() {
   wss.clients.forEach(function each(ws) {
