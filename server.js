@@ -17,6 +17,8 @@ var playersArr = []
 wss.on('connection', (ws) => {
   ws.isAlive = true;
   var clientId = randomId(16);
+  var playerAddent = new player(0,0,clientId);
+  playersArr.push(playerAddent);
   
   console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
@@ -26,7 +28,10 @@ wss.on('connection', (ws) => {
     else{console.log(message)}
   })
   
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', function close() {
+    console.log('Client *'+clientId+'* disconnected')
+    playersArr.splice(playerArr.findIndex(clientId),1)
+  });
   ws.on('pong', heartbeat);
 });
 wss.on('close', function close() {
@@ -55,6 +60,11 @@ function randomId(length) {
     return str;
 }
 function noop(){}
+function player(x,y,id){
+  this.x = x
+  this.y = y
+  this.id = id
+}
 function heartbeat(){
   this.isAlive = true;
 }
