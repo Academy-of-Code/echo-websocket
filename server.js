@@ -45,7 +45,7 @@ wss.on('connection', (ws) => {
       var index = playersArr.findIndex(function(item,i){return item.id===clientId})
       playersArr[index].x+=5
     }
-    else if(message.startWith('RES-ADMIN_KICK-')){
+    else if(message.startsWith('RES-ADMIN_KICK-')){
       var targetId = message.split('-')[2]
       sendAllClients('Admin-kick-'+targetId)
     }
