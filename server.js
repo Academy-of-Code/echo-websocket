@@ -49,7 +49,7 @@ wss.on('connection', (ws) => {
       var targetId = message.split('-')[2]
       sendAllClients('Admin-kick-'+targetId)
     }
-    else if(message.startsWith('ADMIN-KICK-'){
+    else if(message.startsWith('ADMIN-KICK-')){
       var targetId = message.split('-')[2]
       if(clientId===targetId){
         ws.send('ALERT-You have been kicked by an Admin.')
