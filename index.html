@@ -39,11 +39,17 @@
     </script>
     <style>
       #game{ border: 1px solid black; }
+      #chatDiv{ position: absolute; border: 1px solid black; top: 7px; left: 320px; height: 90%; width: 50%; }
+      #msgInput{ position: absolute; left: 0px; top: 350px; }
+      #sendMsg{ position: absolute; left: 210px; top: 350px; }
     </style>
   </head>
   <body>
     <canvas id="game" width=300 height=300></canvas>
-    <div id="chatDiv"></div>
+    <div class='chat' id="chatDiv"></div>
+    
+    <input class='chat' id="msgInput" placeholder='Type your message here...'>
+    <button class='chat' id="sendMsg" onclick='ws.send(document.getElementById("msgInput").value);document.getElementById("msgInput").value=""'>Send Message</button>
     <script>
       const c = document.getElementById('game');
       const ctx = c.getContext('2d');
