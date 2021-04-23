@@ -46,12 +46,13 @@ wss.on('connection', (ws) => {
       playersArr[index].x+=5
     }
     else if(message.startWith('RES-ADMIN_KICK-')){
-      var targetId = message.splice('-')[2]
+      var targetId = message.split('-')[2]
       sendAllClients('Admin-kick-'+targetId)
     }
     else if(message.startsWith('ADMIN-KICK-'){
-      var TargetId = message.splice('-')[2]
-      if(clientId===TargetId){
+      var targetId = message.split('-')[2]
+      if(clientId===targetId){
+        ws.send('ALERT-You have been kicked by an Admin.')
         ws.terminate();
       }
     }
