@@ -45,6 +45,15 @@ wss.on('connection', (ws) => {
       var index = playersArr.findIndex(function(item,i){return item.id===clientId})
       playersArr[index].x+=5
     }
+    else if(message.startWith('RES-ADMIN_KICK')){
+      var targetId = message.splice('-')[2]
+      if(clientId===targetId){
+        ws.terminate();
+      }
+      wss.clients.forEach(function each(ws) {
+        ws.send('Admin-kick')
+      });
+    }
     else{
       var index = playersArr.findIndex(function(item,i){return item.id===clientId})
       sendAllClients( playersArr[index].name+"-"+message );
@@ -60,6 +69,7 @@ wss.on('connection', (ws) => {
 });
 wss.on('close', function close() {
   clearInterval(interval);
+  sendAllCients('ALERT-Closing server! will be up in a minute')
 })
 function sendAllClients(msg){
   wss.clients.forEach(function each(ws) {
