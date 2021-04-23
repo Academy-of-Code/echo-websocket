@@ -17,7 +17,12 @@
       var enterName = false
       ws.onmessage = function incoming(data) {
         var msg = data.data
-        playersArr = JSON.parse(msg);
+        if(msg.startsWith('[')){
+          playersArr = JSON.parse(msg); 
+        }
+        else{
+          addChat(message.split('-')[1], message.split('-')[0])
+        }
         if(enterName===false){
         	var name = window.prompt('Please enter your name!');
         	ws.send('NAME-'+name);
@@ -38,6 +43,7 @@
   </head>
   <body>
     <canvas id="game" width=300 height=300></canvas>
+    <div id="chatDiv"></div>
     <script>
       const c = document.getElementById('game');
       const ctx = c.getContext('2d');
@@ -57,6 +63,19 @@
           ctx.fillStyle = '#000000'
         }
         ctx.fillRect(x,y,pixelSize,pixelSize)
+      }
+      function addChat(msg,name){
+        const output = document.getElementById('chatDiv');
+        if(name){
+          var ele = document.createElement('P');
+          ele.innerHTML = new Date().toTimeString().split(' ')[0]+" "+name+": "+msg;
+          output.appendChild(ele);
+        }
+        else{
+          var ele = document.createElement('P');
+          ele.innerHTML = new Date().toTimeString().split(' ')[0]+" UNKNOWN: "+msg;
+          output.appendChild(ele);
+        }
       }
       function paintText(txt,x,y,txtSize){
       	ctx.font = txtSize+"px Arial";
