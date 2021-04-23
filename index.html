@@ -39,7 +39,7 @@
     </script>
     <style>
       #game{ border: 1px solid black; }
-      #chatDiv{ position: absolute; border: 1px solid black; top: 7px; left: 320px; height: 90%; width: 50%; }
+      #chatDiv{ position: absolute; border: 1px solid black; top: 7px; left: 320px; height: 90%; width: 50%; overflow: auto; }
       #msgInput{ position: absolute; left: 0px; top: 350px; }
       #sendMsg{ position: absolute; left: 210px; top: 350px; }
     </style>
@@ -49,7 +49,7 @@
     <div class='chat' id="chatDiv"></div>
     
     <input class='chat' id="msgInput" placeholder='Type your message here...'>
-    <button class='chat' id="sendMsg" onclick='ws.send(document.getElementById("msgInput").value);document.getElementById("msgInput").value=""'>Send Message</button>
+    <button class='chat' id="sendMsg" onclick='sendMsg()'>Send Message</button>
     <script>
       const c = document.getElementById('game');
       const ctx = c.getContext('2d');
@@ -75,12 +75,19 @@
         if(name){
           var ele = document.createElement('P');
           ele.innerHTML = new Date().toTimeString().split(' ')[0]+" "+name+": "+msg;
+          ele.style.wordWrap = 'break-word'
           output.appendChild(ele);
         }
         else{
           var ele = document.createElement('P');
           ele.innerHTML = new Date().toTimeString().split(' ')[0]+" UNKNOWN: "+msg;
+          ele.style.wordWrap = 'break-word';
           output.appendChild(ele);
+        }
+      }
+      function sendMsg(){
+      	if(document.getElementById("msgInput").value!==""){
+        	ws.send(document.getElementById("msgInput").value);document.getElementById("msgInput").value=""
         }
       }
       function paintText(txt,x,y,txtSize){
@@ -108,6 +115,9 @@
         else if(e.keyCode == 100) {
         	// Right
           move('right');
+        }
+        else if(e.keyCode == 13){
+        	sendMsg();
         }
         console.log(e.keyCode)
       }
