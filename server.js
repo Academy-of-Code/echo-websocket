@@ -21,7 +21,8 @@ wss.on('connection', (ws) => {
   console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
     if(message.startsWith('JOIN')){
-      console.log('CODE:: '+message)
+      var code = message.split('-')[1];
+      console.log('CODE:: '+code)
     }
   })
   
