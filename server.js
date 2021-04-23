@@ -23,6 +23,7 @@ wss.on('connection', (ws) => {
     if(message.startsWith('JOIN')){
       var code = message.split('-')[1];
       console.log('CODE:: '+code)
+      console.log(lookForCode(code))
     }
   })
   
