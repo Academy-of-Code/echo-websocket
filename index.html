@@ -21,7 +21,7 @@
           playersArr = JSON.parse(msg); 
         }
         else{
-          addChat(message.split('-')[1], message.split('-')[0])
+          addChat(msg.split('-')[1], msg.split('-')[0])
         }
         if(enterName===false){
         	var name = window.prompt('Please enter your name!');
