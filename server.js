@@ -14,7 +14,7 @@ const wss = new Server({ server });
 
 var playersArr = []
 var accountsArr = [
-  {accName: 'Dillion', nameColor: '#FF0000', accUsername: 'BBM', accPassword: 'Password'}
+  {accName: 'Dillion', nameColor: '#FF0000', accUsername: 'e98ae3a385900e101b403c3b87a8f291fdf5d17c1ec55612154ac2b25da228bd', accPassword: 'e7cf3ef4f17c3999a94f2c6f612e8a888e5b1026878e4e19398b23bd38ec221a'}
 ]
 
 wss.on('connection', (ws) => {
