@@ -45,14 +45,15 @@ wss.on('connection', (ws) => {
       var index = playersArr.findIndex(function(item,i){return item.id===clientId})
       playersArr[index].x+=5
     }
-    else if(message.startWith('RES-ADMIN_KICK')){
+    else if(message.startWith('RES-ADMIN_KICK-')){
       var targetId = message.splice('-')[2]
-      if(clientId===targetId){
+      sendAllClients('Admin-kick-'+targetId)
+    }
+    else if(message.startsWith('ADMIN-KICK-'){
+      var TargetId = message.splice('-')[2]
+      if(clientId===TargetId){
         ws.terminate();
       }
-      wss.clients.forEach(function each(ws) {
-        ws.send('Admin-kick')
-      });
     }
     else{
       var index = playersArr.findIndex(function(item,i){return item.id===clientId})
