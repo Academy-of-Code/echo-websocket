@@ -47,7 +47,7 @@ wss.on('connection', (ws) => {
     }
     else{
       var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      ws.send( playersArr[index].name+": "+message )
+      sendAllClients( playersArr[index].name+"-"+message );
     }
     ws.send( JSON.stringify(playersArr) )
   })
@@ -61,6 +61,11 @@ wss.on('connection', (ws) => {
 wss.on('close', function close() {
   clearInterval(interval);
 })
+function sendAllClients(msg){
+  wss.clients.forEach(function each(ws) {
+    ws.send(msg)
+  });
+}
 
 var playerDataSender = setInterval(function sendData() {
   wss.clients.forEach(function each(ws) {
