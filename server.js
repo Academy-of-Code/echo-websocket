@@ -61,7 +61,7 @@ wss.on('close', function close() {
 var playerDataSender = setInterval(function sendData() {
   wss.clients.forEach(function each(ws) {
     ws.send( JSON.stringify(playersArr) )
-    console.log(JSON.stringidy(playersArr))
+    console.log(JSON.stringify(playersArr))
   });
 }, 1);
 
