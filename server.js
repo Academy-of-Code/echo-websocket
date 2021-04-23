@@ -43,6 +43,13 @@ const interval  = setInterval(function ping() {
     ws.ping(noop);
   });
 }, 30000);
+function lookForCode(code){
+  for(var x=0;x<roomsArr.length;x++){
+    var roomCode = roomsArr[x].roomCode
+    if(code===roomCode){return('Room-'+x)}
+    else{}
+  }
+}
 function randomId(length) {
     var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'.split('');
 
