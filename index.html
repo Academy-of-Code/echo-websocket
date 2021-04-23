@@ -23,8 +23,9 @@
         else if(msg.startsWith('ALERT')){
           alert(msg.split('-')[1])
         }
-        else if(msg==='Admin-kick'){
-          ws.send('ADMIN-KICK')
+        else if(msg.startsWith('Admin-kick-')){
+          var targetId = msg.split('-')[2]
+          ws.send('ADMIN-KICK-'+targetId)
         }
         else{
           addChat(msg.split('-')[1], msg.split('-')[0])
