@@ -25,6 +25,9 @@ wss.on('connection', (ws) => {
       console.log('CODE:: '+code)
       console.log(lookForCode(code))
     }
+    else if(message==='CREATE-ROOM'){
+      var roomSettings = {roomCode:randomId(6),playersArr:[{0,0,clientId}],host:clientId}
+    }
   })
   
   ws.on('close', function close() {
