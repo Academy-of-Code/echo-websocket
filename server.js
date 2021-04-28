@@ -47,7 +47,7 @@ wss.on('connection', (ws) => {
       
       for(var x=0;x<accounts.length;x++){
         var acc = accounts[x]
-        if(hashedUsername===sha256(accName) && hashedPassword===accPassword){
+        if(hashedUsername===sha256(acc.accName) && hashedPassword===accPassword){
           loggedIn = true;
           accountLoggedIn = acc
           console.log(acc);
