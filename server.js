@@ -20,8 +20,10 @@ wss.on('connection', (ws) => {
   
   console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
-    console.log(message)
-    ws.send(message)
+    if(message.startsWith('JOIN-')){
+      var roomCode = message.split('-')[1]
+      console.log(roomCode);
+    }
   })
   
   ws.on('close', function close() {
