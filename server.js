@@ -12,7 +12,7 @@ const server = express()
 
 const wss = new Server({ server });
 
-var playersArr = []
+var rooms = []
 
 wss.on('connection', (ws) => {
   ws.isAlive = true;
@@ -23,6 +23,9 @@ wss.on('connection', (ws) => {
     if(message.startsWith('JOIN-')){
       var roomCode = message.split('-')[1]
       console.log(roomCode);
+    }
+    else if(message ===  'GET_NUM_ROOMS'){
+      ws.send(rooms.length)
     }
   })
   
