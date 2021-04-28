@@ -42,17 +42,21 @@ wss.on('connection', (ws) => {
       rooms.push(newRoom)
     }
     else if(message.startsWith('RES-LOGIN-')){
-      var hashedUsername = sha256(message.split('-')[2]);
-      var hashedPassword = sha256(message.split('-')[3]);
-      
-      for(var x=0;x<accounts.length;x++){
-        var acc = accounts[x]
-        if(hashedUsername===sha256(acc.accName) && hashedPassword===acc.accPassword){
-          loggedIn = true;
-          accountLoggedIn = acc
-          console.log(acc);
-        }
-      }
+      if(loggedIn===false){  
+	      var hashedUsername = sha256(message.split('-')[2]);
+	      var hashedPassword = sha256(message.split('-')[3]);
+
+	      for(var x=0;x<accounts.length;x++){
+		var acc = accounts[x]
+		if(hashedUsername===sha256(acc.accName) && hashedPassword===acc.accPassword){
+		  loggedIn = true;
+		  accountLoggedIn = acc
+		  console.log(acc);
+		}
+      }  
+    }
+    else{console.log('Already logged in!')}
+	  
     }
     else{
       ws.send(message)
