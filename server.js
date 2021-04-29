@@ -39,7 +39,7 @@ wss.on('connection', (ws) => {
     }
     else if(message.startsWith('RES-NEW_ROOM-')){
       var isPrivate = JSON.parse(message.split('-')[2].toLowerCase())
-      var player = { 0,0,clientId,true }
+      var player = { x:0,y:0,id:clientId,isHost:true }
       var maxPlayers = parseInt(message.split('-')[3])
       var gameMode = message.split('-')[4]
       
