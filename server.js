@@ -34,7 +34,10 @@ wss.on('connection', (ws) => {
   ws.on('message', function incoming(message) {
     if(message.startsWith('JOIN-')){
       var roomCode = message.split('-')[1]
-      console.log(roomCode);
+      for(var x=0;x<rooms.length;x++){
+      	var room = rooms[x]
+	if(roomCode===room.roomCode){ws.send('JOINED-'+room)}
+      }
     }
     else if(message==='GET_NUM_ROOMS'){
       ws.send(rooms.length)
