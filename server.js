@@ -37,10 +37,18 @@ wss.on('connection', (ws) => {
     else if(message==='GET_NUM_ROOMS'){
       ws.send(rooms.length)
     }
-    else if(message==='RES-NEW_ROOM'){
-      var newRoom = {playersArr:[ {host:true,id:clientId}, ],roomCode:randomRoomCode(6),roomId:randomId(16)}
+    else if(message.startsWith('RES-NEW_ROOM-')){
+      var isPrivate = JSON.parse(message.split('-')[2].toLowerCase())
+      var player = new playerConstructor(0,0,clientId,true)
+      var maxPlayers = parseInt(message.split('-')[3])
+      var gameMode = message.split('-')[4]
+      
+      var newRoom = new roomConstructor(isPrivate, player, maxPlayers, gameMode)
+      // isPrivate,creator,maxPlayers,gameMode
+      
       rooms.push(newRoom)
       console.log(newRoom)
+      console.log(player)
     }
     else if(message.startsWith('RES-LOGIN-')){
       if(loggedIn===false){  
@@ -101,6 +109,22 @@ function randomRoomCode(length) {
     }
     return str;
 }
+
+function roomConstructor(isPrivate,creator,maxPlayers,gameMode){
+	this.roomCode = randomRoomCode(6);
+	this.roomId = randomId(16);
+	this.playersArr = [ creator ];
+	this.isPrivate = isPrivate;
+	this.maxPlayers = maxPlayers;
+	this.gameMode = gameMode;
+}
+function playerConstructor(x,y,id,isHost){
+	this.x = x
+	this.y = y
+	this.id = id
+	this.isHost = isHost
+}
+
 function randomId(length) {
     var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'.split('');
 
@@ -118,6 +142,17 @@ function noop(){}
 function heartbeat(){
   this.isAlive = true;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 function sha256(ascii) {
 	function rightRotate(value, amount) {
