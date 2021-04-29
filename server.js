@@ -55,6 +55,13 @@ wss.on('connection', (ws) => {
 		}
       }  
     }
+    else if(message==='RES-LOGOUT'){
+    	if(loggedIn===true){
+ 	    loggedIn=false
+	    accountLoggedIn=null
+	}
+	console.log('Logged out for Client '+clientId)
+    }
     else{console.log('Already logged in!')}
 	  
     }
