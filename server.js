@@ -40,6 +40,7 @@ wss.on('connection', (ws) => {
     else if(message==='RES-NEW_ROOM'){
       var newRoom = {playersArr:[ {host:true,id:clientId}, ],roomCode:randomRoomCode(6),roomId:randomId(16)}
       rooms.push(newRoom)
+      console.log(newRoom)
     }
     else if(message.startsWith('RES-LOGIN-')){
       if(loggedIn===false){  
