@@ -25,6 +25,8 @@ wss.on('connection', (ws) => {
   ws.isAlive = true;
   var clientId = randomId(16);
   
+  var yourPlayer = null
+	
   var loggedIn = false;
   var accountLoggedIn = null;
   
@@ -40,6 +42,7 @@ wss.on('connection', (ws) => {
     else if(message.startsWith('RES-NEW_ROOM-')){
       var isPrivate = JSON.parse(message.split('-')[2].toLowerCase())
       var player = { x:0,y:0,id:clientId,isHost:true }
+      yourPlayer = player
       var maxPlayers = parseInt(message.split('-')[3])
       var gameMode = message.split('-')[4]
       
