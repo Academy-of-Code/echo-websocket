@@ -90,7 +90,7 @@ wss.on('connection', (ws) => {
   })
   
   ws.on('close', function close() {
-    const serverIndex = servers.findIndex( function(item,i){return item.id===connectionId} );
+    const serverIndexx = servers.findIndex( function(item,i){return item.id===connectionId} );
     server.splice(serverIndex,1);
   });
   ws.on('pong', heartbeat);
