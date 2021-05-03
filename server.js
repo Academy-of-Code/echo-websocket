@@ -81,7 +81,7 @@ function heartbeat(){
 
 function emailUsed(email){
   for(var x=0;x<accounts_teachTools.length;x++){
-  	var account = accounts_techTools[x]
+  	var account = accounts_teachTools[x]
 	if(email===account.email){
 		if(account.active===true){return(true)}
 	}
