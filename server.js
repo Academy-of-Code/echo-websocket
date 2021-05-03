@@ -57,6 +57,8 @@ wss.on('connection', (ws) => {
       
       var storageData = server[serverIndex].memory[storageIndex]
       
+      console.log(storageIndex)
+      
       console.log(storageData);
       ws.send(storageData)
     }
