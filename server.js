@@ -12,57 +12,92 @@ const server = express()
 
 const wss = new Server({ server });
 
-var playersArr = []
+var servers = [];
+var storeageUnits = [];
 
 wss.on('connection', (ws) => {
   ws.isAlive = true;
-  var clientId = randomId(16);
-  playersArr.push( {x:0,y:0,id:clientId} );
+  const connectionId = randomId(16);
   
-  console.log( JSON.stringify(playersArr) );
+  console.log(connectionId+' is our new Connection!');
+  servers.push( { memory: [], id: connectionId, use: 'Unknown' } )
   
-  console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
-    if(message.startsWith('NAME')){
-      var name = message.split('-')[1];
-      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].name=name
-      console.log('Client *'+clientId+'* has chosen its name and it is: '+name)
+    
+    if(message.startsWith('STORE-')){
+      const key = {0: 'JSON', 1: 'Blob', 2: 'Array', 3: 'UNKNOWN'}
+      var storageUnit = message.split('-')[1];
+      var storageUnitName = message.split('-')[2]
+      var storageType = message.split('-')[3]
+      
+      const index = servers.findIndex( function(item,i){return item.id===connectionId} )
+      
+      if(storageType===0){servers[index].memory.push( {storageUnitName: JSON.parse(storageUnit), storageId: randomId(16)} )}
+      else if(storageType===1){servers[index].memory.push( {storageUnitName: storageUnit, storageId: randomId(16)} )}
+      
+      console.log(storageUnit);
+      ws.send('I have stored '+storageUnit)
     }
-    else if(message==='RES-MOVE_UP'){
-      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].y-=5
+    else if(message.startsWith('GET-')){
+      var storageUnitId = message.split('-')[1]
+      var storageUnitName = message.split('-')[2]
+      
+      const serverIndex = servers.findIndex( function(item,i){return item.id===connectionId} )
+      var storageIndex = null
+      
+      if(storageUnitId!==null&&storageUnitId!==undefined&&storageUnitId.length===16){
+        storageIndex = server[serverIndex].memory.findIndex( function(item,i){return item.id===storageUnitId} )
+      }
+      else if(storageUnitName!==null&&storageUnitName!==undefined){
+        storageIndex = server[serverIndex].memory.findIndex( function(item,i){return item.id===storageUnitName} )
+      }
+      else{
+        ws.send('Error! I was unable to send your data.')
+      }
+      
+      var storageData = server[serverIndex].memory[storageIndex]
+      
+      console.log(storageData);
+      ws.send(storageData)
     }
-    else if(message==='RES-MOVE_DOWN'){
-      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].y+=5
+    else if(message==='CLEAR-MEMORY'){
+      const serverIndex = servers.findIndex( function(item,i){return item.id===connectionId} )
+      server[serverIndex].memory = []
     }
-    else if(message==='RES-MOVE_LEFT'){
-      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].x-=5
+    else if(message.startsWith('REMOVE_MEMORY-')){
+      var storageUnitId = message.split('-')[1]
+      var storageUnitName = message.split('-')[2]
+      
+      const serverIndex = servers.findIndex( function(item,i){return item.id===connectionId} )
+      var storageIndex = null
+      
+      if(storageUnitId!==null&&storageUnitId!==undefined&&storageUnitId.length===16){
+        storageIndex = server[serverIndex].memory.findIndex( function(item,i){return item.id===storageUnitId} )
+      }
+      else if(storageUnitName!==null&&storageUnitName!==undefined){
+        storageIndex = server[serverIndex].memory.findIndex( function(item,i){return item.id===storageUnitName} )
+      }
+      else{
+        ws.send('Error! I was unable to send your data.')
+      }
+      
+      server[serverIndex].memory.splice(storageIndex,1)
+      
+      console.log(storageData);
+      ws.send(storageData)
     }
-    else if(message==='RES-MOVE_RIGHT'){
-      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].x+=5
-    }
-    ws.send( JSON.stringify(playersArr) )
+    
   })
   
   ws.on('close', function close() {
-    console.log('Client *'+clientId+'* disconnected')
-    playersArr.splice( playersArr.findIndex(function(item, i){return item.id===clientId}) ,1)
+    const serverIndex = servers.findIndex( function(item,i){return item.id===connectionId} );
+    server.splice(serverIndex,1);
   });
   ws.on('pong', heartbeat);
 });
 wss.on('close', function close() {
   clearInterval(interval);
 })
-
-var playerDataSender = setInterval(function sendData() {
-  wss.clients.forEach(function each(ws) {
-    ws.send( JSON.stringify(playersArr) )
-  });
-}, 1);
 
 const interval  = setInterval(function ping() {
   wss.clients.forEach(function each(ws) {
@@ -86,11 +121,6 @@ function randomId(length) {
     return str;
 }
 function noop(){}
-function player(x,y,id){
-  this.x = x
-  this.y = y
-  this.id = id
-}
 function heartbeat(){
   this.isAlive = true;
 }
