@@ -29,7 +29,7 @@ wss.on('connection', (ws) => {
     if(message.startsWith('NEW_ACC-')){
       var account_details = message.split('-')[1];
       
-      accounts_teachTools.push( JSON.parse(account_details) )
+      //accounts_teachTools.push( JSON.parse(account_details) )
       
       console.log(account_details);
       ws.send('I have stored '+account_details)
