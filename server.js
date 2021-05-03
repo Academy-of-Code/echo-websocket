@@ -29,12 +29,16 @@ wss.on('connection', (ws) => {
     if(message.startsWith('NEW_ACC-')){
       var account_details = message.split('-')[1];
       
-      //accounts_teachTools.push( JSON.parse(account_details) )
-      
-      console.log(account_details);
-      ws.send('I have stored '+account_details)
+      if(emailUsed(accounts_techTools.email)===true){}
+      else{
+      	accounts_teachTools.push( account_details )
+      	console.log(account_details);
+      	ws.send('I have stored '+account_details)
+      }
     }
-    
+    else if(message==='GET-ACCOUNTS'){
+    	ws.send(accounts_teachTools);
+    }
   })
   
   ws.on('close', function close() {
@@ -75,6 +79,14 @@ function heartbeat(){
 }
 
 
+function emailUsed(email){
+  for(var x=0;x<accounts_teachTools.length;x++){
+  	var account = accounts_techTools[x]
+	if(email===account.email){
+		if(account.active===true){return(true)}
+	}
+  }
+}
 
 
 
