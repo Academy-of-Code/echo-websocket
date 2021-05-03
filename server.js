@@ -29,7 +29,7 @@ wss.on('connection', (ws) => {
     if(message.startsWith('NEW_ACC-')){
       var account_details = message.split('-')[1];
       
-      if(emailUsed(accounts_techTools.email)===true){}
+      if(emailUsed(account_details.email)===true){}
       else{
       	accounts_teachTools.push( account_details )
       	console.log(account_details);
