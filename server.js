@@ -17,6 +17,8 @@ wss.on('connection', (ws) => {
   var clientId = randomId(16);
   
   console.log('Client *'+clientId+'* connected');
+  ws.send('Hey you connected client *'+clientId+'*')
+  
   ws.on('message', function incoming(message) {
     var msg = message
     ws.send(msg)
