@@ -12,22 +12,14 @@ const server = express()
 
 const wss = new Server({ server });
 
-var roomsArr = []
-
 wss.on('connection', (ws) => {
   ws.isAlive = true;
   var clientId = randomId(16);
   
   console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
-    if(message.startsWith('JOIN')){
-      var code = message.split('-')[1];
-      console.log('CODE:: '+code)
-      console.log(lookForCode(code))
-    }
-    else if(message==='CREATE-ROOM'){
-      var roomSettings = {roomCode:randomId(6),playersArr:[{0,0,clientId}],host:clientId}
-    }
+    var msg = message
+    ws.send(msg)
   })
   
   ws.on('close', function close() {
@@ -47,13 +39,6 @@ const interval  = setInterval(function ping() {
     ws.ping(noop);
   });
 }, 30000);
-function lookForCode(code){
-  for(var x=0;x<roomsArr.length;x++){
-    var roomCode = roomsArr[x].roomCode
-    if(code===roomCode){return('Room-'+x)}
-    else{}
-  }
-}
 function randomId(length) {
     var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'.split('');
 
