@@ -12,6 +12,8 @@ const server = express()
 
 const wss = new Server({ server });
 
+var games = []
+
 wss.on('connection', (ws) => {
   ws.isAlive = true;
   var clientId = randomId(16);
@@ -21,7 +23,22 @@ wss.on('connection', (ws) => {
   
   ws.on('message', function incoming(message) {
     var msg = message
-    ws.send(msg)
+    if(msg.startsWith('UPDATE-')){
+      var gameName = msg.split('-')[1]
+      
+      var cycles = 0
+      var match = false
+      for(var x=0;x<games.length;x++){
+        var gamee = games[x]
+        if(gamee.gameName===gameName && gamee!==undefined && gamee.gameName!==undefined){
+          gamee.clicks+=1
+          match = true
+        }
+      }
+      if(match===false){
+        games.push( {gameName:gameName,clicks:1,gameIndex:games.length} )
+      }
+    }
   })
   
   ws.on('close', function close() {
