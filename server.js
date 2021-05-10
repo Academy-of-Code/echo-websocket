@@ -37,7 +37,7 @@ wss.on('connection', (ws) => {
           console.log('Match found, Match now has '+gamee.clicks)
         }
       }
-      if(match===false && cycles===games.length){
+      if(match===false /* && cycles===games.length */){
         games.push( {gameName:gameName,clicks:0,gameIndex:games.length} )
         console.log('Match not found! Making index for that game!');
       }
