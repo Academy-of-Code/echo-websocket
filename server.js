@@ -19,10 +19,10 @@ wss.on('connection', (ws) => {
   var clientId = randomId(16);
   
   console.log('Client *'+clientId+'* connected');
-  ws.send('Hey you connected client *'+clientId+'*')
+  // ws.send('Hey you connected client *'+clientId+'*')
   
   ws.send(games)
-  ws.send(JSON.stringify(games))
+  // ws.send(JSON.stringify(games))
   console.log(games)
   
   ws.on('message', function incoming(message) {
