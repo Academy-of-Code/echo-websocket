@@ -38,8 +38,8 @@ wss.on('connection', (ws) => {
         }
       }
       if(match===false /* && cycles===games.length */){
-        games.push( {gameName:gameName,clicks:1,gameIndex:games.length} )
-        console.log('Match not found! Making index for that game!');
+        games.push( {gameName:gameName,clicks:1,gameIndex:games.length,displayName:msg.split('-')[2]} )
+        console.log('Match not found! Making index for '+msg.split('-')[2]);
       }
     }
   })
