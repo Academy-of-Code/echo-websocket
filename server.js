@@ -33,10 +33,12 @@ wss.on('connection', (ws) => {
         if(gamee.gameName===gameName && gamee!==undefined && gamee.gameName!==undefined){
           gamee.clicks+=1
           match = true
+          console.log('Match found, Match now has '+gamee.clicks)
         }
       }
       if(match===false){
         games.push( {gameName:gameName,clicks:1,gameIndex:games.length} )
+        console.log('Match not found! Making inde for that game!');
       }
     }
   })
