@@ -20,6 +20,7 @@ wss.on('connection', (ws) => {
   
   console.log('Client *'+clientId+'* connected');
   ws.send('Hey you connected client *'+clientId+'*')
+  ws.send(games)
   
   ws.on('message', function incoming(message) {
     var msg = message
