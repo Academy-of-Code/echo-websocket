@@ -25,15 +25,12 @@ wss.on('connection', (ws) => {
   ws.on('message', function incoming(message) {
     if(message.startsWith('REASON-')){
       var reason = message.split('-')[1];
-      // var index = playersArr.findIndex(function(item,i){return item.id===clientId})
       websocketReason = reason
     }
-    ws.send( JSON.stringify(playersArr) )
   })
   
   ws.on('close', function close() {
     console.log('Client *'+clientId+'* disconnected')
-    playersArr.splice( playersArr.findIndex(function(item, i){return item.id===clientId}) ,1)
   });
   ws.on('pong', heartbeat);
 });
