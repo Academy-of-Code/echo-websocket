@@ -28,6 +28,7 @@ wss.on('connection', (ws) => {
     if(message.startsWith('REASON-')){
       var reason = message.split('-')[1];
       websocketReason = reason
+      console.log(`websocketReason is now ${websocketReason}, it should be ${reason}`)
     }
     else{
       console.log(message);
