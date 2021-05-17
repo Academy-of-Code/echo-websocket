@@ -32,7 +32,6 @@ wss.on('connection', (ws) => {
     else{
       console.log(message);
       if(websocketReason === 'ChatApp1'){ ChatApp1(message,ws,clientId); }
-      console.log('Sent function on a run!')
     }
   })
   
@@ -57,7 +56,6 @@ function ChatApp1(msg,client,clientID){
         console.log(clientA.reason+", this reason wasn't identical to 'ChatApp1' ")
       }
     });
-    console.log(`Client *${clientID}* has send the message ${msg} to Everyone!`);
   }
 }
 
