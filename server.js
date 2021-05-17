@@ -83,10 +83,13 @@ function randomId(length) {
     }
     return str;
 }
-function findIndex(arr, propName, propValue) {
-  for (var i=0; i < arr.length; i++)
-    if (arr[i][propName] == propValue)
-      return arr[i];
+function findIndexId(arr, id) {
+  for (var i=0; i < arr.length; i++){
+    var arrObj = arr[i]
+    if(arrObj.id===id){
+      return(i)
+    }
+  }
 
   // will return undefined if not found; you could return a default instead
 }
