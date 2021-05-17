@@ -30,7 +30,7 @@ wss.on('connection', (ws) => {
       websocketReason = reason
       var index = findIndexId(clients,clientId);
       clients[index].reason = websocketReason
-      console.log(`websocketReason is now ${websocketReason}, it should be ${reason}`)
+      console.log(`websocketReason is now ${clients[index].reason}, it should be ${reason}`)
     }
     else{
       console.log(message);
@@ -52,7 +52,7 @@ function ChatApp1(msg,client,clientID){
     var clientMessage = msg.split('-')[1];
     clients.forEach(function each(clientA) {
       if(clientA.reason==='ChatApp1'){
-        clientA.ws.send( clientMessage );
+        clientA.socketCLient.send( clientMessage );
         console.log('DEBUG MSG')
       }
       else{
