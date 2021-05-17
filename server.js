@@ -6,44 +6,27 @@ const { Server } = require('ws');
 const PORT = process.env.PORT || 3000;
 const INDEX = '/index.html';
 
+const supportedSockets = ["ChatApp1"]
+
 const server = express()
   .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 const wss = new Server({ server });
 
-var playersArr = []
-
 wss.on('connection', (ws) => {
   ws.isAlive = true;
+  var websocketReason = 'Unknown'
   var clientId = randomId(16);
-  playersArr.push( {x:0,y:0,id:clientId} );
   
   console.log( JSON.stringify(playersArr) );
   
   console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
-    if(message.startsWith('NAME')){
-      var name = message.split('-')[1];
-      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].name=name
-      console.log('Client *'+clientId+'* has chosen its name and it is: '+name)
-    }
-    else if(message==='RES-MOVE_UP'){
-      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].y-=5
-    }
-    else if(message==='RES-MOVE_DOWN'){
-      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].y+=5
-    }
-    else if(message==='RES-MOVE_LEFT'){
-      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].x-=5
-    }
-    else if(message==='RES-MOVE_RIGHT'){
-      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
-      playersArr[index].x+=5
+    if(message.startsWith('REASON-')){
+      var reason = message.split('-')[1];
+      // var index = playersArr.findIndex(function(item,i){return item.id===clientId})
+      websocketReason = reason
     }
     ws.send( JSON.stringify(playersArr) )
   })
@@ -57,12 +40,6 @@ wss.on('connection', (ws) => {
 wss.on('close', function close() {
   clearInterval(interval);
 })
-
-var playerDataSender = setInterval(function sendData() {
-  wss.clients.forEach(function each(ws) {
-    ws.send( JSON.stringify(playersArr) )
-  });
-}, 1);
 
 const interval  = setInterval(function ping() {
   wss.clients.forEach(function each(ws) {
