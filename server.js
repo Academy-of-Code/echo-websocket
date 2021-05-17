@@ -28,7 +28,7 @@ wss.on('connection', (ws) => {
     if(message.startsWith('REASON-')){
       var reason = message.split('-')[1];
       websocketReason = reason
-      var index = findIndex(clients,'id',clientId);
+      var index = findIndex(clients,clientId);
       clients[index].reason = websocketReason
       console.log(`websocketReason is now ${websocketReason}, it should be ${reason}`)
     }
