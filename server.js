@@ -51,6 +51,7 @@ function ChatApp1(msg,client,clientID){
     clients.forEach(function each(clientA) {
       if(clientA.reason==='ChatApp1'){
         clientA.ws.send( clientMessage );
+        console.log('DEBUG MSG')
       }
     });
     console.log(`Client *${clientID}* has send the message ${msg} to Everyone!`);
