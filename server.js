@@ -30,7 +30,6 @@ wss.on('connection', (ws) => {
       websocketReason = reason
       var index = findIndexId(clients,clientId);
       clients[index].reason = websocketReason
-      console.log(`websocketReason is now ${clients[index].reason}, it should be ${reason}`)
     }
     else{
       console.log(message);
@@ -53,11 +52,8 @@ function ChatApp1(msg,client,clientID){
     clients.forEach(function each(clientA) {
       if(clientA.reason==='ChatApp1'){
         clientA.socketClient.send( clientMessage );
-        console.log('DEBUG MSG')
       }
-      else{
-        console.log(clientA.reason+", this reason wasn't identical to 'ChatApp1' ")
-      }
+      else{}
     });
   }
 }
