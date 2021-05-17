@@ -28,6 +28,8 @@ wss.on('connection', (ws) => {
     if(message.startsWith('REASON-')){
       var reason = message.split('-')[1];
       websocketReason = reason
+      var index = findIndex(clients,id,clientID);
+      clients[index].reason = websocketReason
       console.log(`websocketReason is now ${websocketReason}, it should be ${reason}`)
     }
     else{
@@ -80,6 +82,13 @@ function randomId(length) {
         str += chars[Math.floor(Math.random() * chars.length)];
     }
     return str;
+}
+function findIndex(arr, propName, propValue) {
+  for (var i=0; i < arr.length; i++)
+    if (arr[i][propName] == propValue)
+      return arr[i];
+
+  // will return undefined if not found; you could return a default instead
 }
 function noop(){}
 function player(x,y,id){
