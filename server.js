@@ -19,8 +19,6 @@ wss.on('connection', (ws) => {
   var websocketReason = 'Unknown'
   var clientId = randomId(16);
   
-  console.log( JSON.stringify(playersArr) );
-  
   console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
     if(message.startsWith('REASON-')){
