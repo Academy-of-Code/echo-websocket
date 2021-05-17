@@ -52,7 +52,7 @@ function ChatApp1(msg,client,clientID){
     var clientMessage = msg.split('-')[1];
     clients.forEach(function each(clientA) {
       if(clientA.reason==='ChatApp1'){
-        clientA.socketCLient.send( clientMessage );
+        clientA.socketClient.send( clientMessage );
         console.log('DEBUG MSG')
       }
       else{
