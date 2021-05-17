@@ -30,7 +30,9 @@ wss.on('connection', (ws) => {
       websocketReason = reason
     }
     else{
+      console.log(message);
       if(websocketReason === 'ChatApp1'){ ChatApp1(message,ws,clientId); }
+      console.log('Sent function on a run!')
     }
   })
   
