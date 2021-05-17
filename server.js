@@ -48,9 +48,9 @@ wss.on('close', function close() {
 function ChatApp1(msg,client,clientID){
   if( msg.startsWith("SEND_MSG_ALL-") ){
     var clientMessage = msg.split('-')[1];
-    client.forEach(function each(client) {
-      if(client.reason==='ChatApp1'){
-        client.ws.send( clientMessage );
+    clients.forEach(function each(clientA) {
+      if(clientA.reason==='ChatApp1'){
+        clientA.ws.send( clientMessage );
       }
     });
     console.log(`Client *${clientID}* has send the message ${msg} to Everyone!`);
