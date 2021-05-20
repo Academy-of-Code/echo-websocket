@@ -20,6 +20,7 @@ wss.on('connection', (ws,req) => {
   var websocketReason = 'Unknown'
   var clientId = randomId(16);
   const IP = req.socket.remoteAddress
+  var username = 'unknown'
   
   var clientJSON = {id:clientId,reason:websocketReason,socketClient:ws,ip:IP,admin:false,username:'unknown'}
   clients.push( clientJSON )
@@ -46,10 +47,11 @@ wss.on('connection', (ws,req) => {
       // websocketReason = reason
       var index = findIndexId(clients,clientId);
       clients[index].username = user
+      username = user
     }
     else{
       // console.log(message);
-      if(websocketReason === 'ChatApp1'){ ChatApp1(message,ws,clientId,IP); }
+      if(websocketReason === 'ChatApp1'){ ChatApp1(message,ws,clientId,IP,username); }
     }
   })
   
@@ -67,10 +69,10 @@ function ChatApp1(msg,client,clientID,ip){
   clients.forEach(function each(clientA) {
     if(clientA.reason==='ChatApp1'){
       if(clientA.admin===true){
-        clientA.socketClient.send( JSON.stringify([clientMessage,ip]) );
+        clientA.socketClient.send( JSON.stringify([username,clientMessage,ip]) );
       }
       else{
-        clientA.socketClient.send( JSON.stringify([clientMessage]) );
+        clientA.socketClient.send( JSON.stringify([username,clientMessage]) );
       }
       console.log( JSON.stringify([clientMessage,ip]) )
     }
