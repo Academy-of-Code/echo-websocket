@@ -51,6 +51,7 @@ function ChatApp1(msg,client,clientID){
   clients.forEach(function each(clientA) {
     if(clientA.reason==='ChatApp1'){
       clientA.socketClient.send( clientMessage );
+      client.send(msg)
     }
     else{}
   });
