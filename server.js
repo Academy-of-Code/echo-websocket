@@ -19,8 +19,9 @@ wss.on('connection', (ws,req) => {
   ws.isAlive = true;
   var websocketReason = 'Unknown'
   var clientId = randomId(16);
+  const IP = req.socket.remoteAddress
   
-  var clientJSON = {id:clientId,reason:websocketReason,socketClient:ws,ip:req.socket.remoteAddress}
+  var clientJSON = {id:clientId,reason:websocketReason,socketClient:ws,ip:IP,admin:false}
   clients.push( clientJSON )
   
   console.log('Client *'+clientId+'* connected');
@@ -31,9 +32,18 @@ wss.on('connection', (ws,req) => {
       var index = findIndexId(clients,clientId);
       clients[index].reason = websocketReason
     }
+    else if(message.startsWith('admin_li-')){
+      var user = message.split('-')[1];
+      var pass = message.split('-')[2];
+      // websocketReason = reason
+      var index = findIndexId(clients,clientId);
+      if(user==='BBM'&&pass==='Mamaw77$'){
+        clients[index].admin = true
+      }
+    }
     else{
       // console.log(message);
-      if(websocketReason === 'ChatApp1'){ ChatApp1(message,ws,clientId); }
+      if(websocketReason === 'ChatApp1'){ ChatApp1(message,ws,clientId,IP); }
     }
   })
   
@@ -46,12 +56,17 @@ wss.on('close', function close() {
   clearInterval(interval);
 })
 
-function ChatApp1(msg,client,clientID){
+function ChatApp1(msg,client,clientID,ip){
   var clientMessage = msg
   clients.forEach(function each(clientA) {
     if(clientA.reason==='ChatApp1'){
-      clientA.socketClient.send( JSON.stringify([clientMessage]) );
-      console.log( JSON.stringify([clientMessage]) )
+      if(clientA.admin===true){
+        clientA.socketClient.send( JSON.stringify([clientMessage,ip]) );
+      }
+      else{
+        clientA.socketClient.send( JSON.stringify([clientMessage]) );
+      }
+      console.log( JSON.stringify([clientMessage,ip]) )
     }
     else{}
   });
