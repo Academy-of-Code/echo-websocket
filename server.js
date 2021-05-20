@@ -15,12 +15,12 @@ const server = express()
 
 const wss = new Server({ server });
 
-wss.on('connection', (ws) => {
+wss.on('connection', (ws,req) => {
   ws.isAlive = true;
   var websocketReason = 'Unknown'
   var clientId = randomId(16);
   
-  var clientJSON = {id:clientId,reason:websocketReason,socketClient:ws}
+  var clientJSON = {id:clientId,reason:websocketReason,socketClient:ws,ip:req.socket.remoteAddress}
   clients.push( clientJSON )
   
   console.log('Client *'+clientId+'* connected');
