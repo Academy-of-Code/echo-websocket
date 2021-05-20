@@ -32,7 +32,7 @@ wss.on('connection', (ws) => {
       clients[index].reason = websocketReason
     }
     else{
-      console.log(message);
+      // console.log(message);
       if(websocketReason === 'ChatApp1'){ ChatApp1(message,ws,clientId); }
     }
   })
@@ -51,6 +51,7 @@ function ChatApp1(msg,client,clientID){
   clients.forEach(function each(clientA) {
     if(clientA.reason==='ChatApp1'){
       clientA.socketClient.send( JSON.stringify([clientMessage]) );
+      console.log( JSON.stringify([clientMessage]) )
     }
     else{}
   });
