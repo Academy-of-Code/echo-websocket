@@ -48,6 +48,7 @@ wss.on('connection', (ws,req) => {
       var index = findIndexId(clients,clientId);
       clients[index].username = user
       username = user
+      reasonComplete(clients[index].reason,clients[index])
     }
     else{
       // console.log(message);
@@ -63,6 +64,12 @@ wss.on('connection', (ws,req) => {
 wss.on('close', function close() {
   clearInterval(interval);
 })
+
+function reasonComplete(reason,client){
+  if(reason==='ChatApp1'){
+    ChatApp1(client.username+' has joined!',client,client.id,'wss://multi-tool-websocket.heroku.app','Server')
+  }
+}
 
 function ChatApp1(msg,client,clientID,ip,username){
   var clientMessage = msg
