@@ -21,7 +21,7 @@ wss.on('connection', (ws,req) => {
   var clientId = randomId(16);
   const IP = req.socket.remoteAddress
   
-  var clientJSON = {id:clientId,reason:websocketReason,socketClient:ws,ip:IP,admin:false}
+  var clientJSON = {id:clientId,reason:websocketReason,socketClient:ws,ip:IP,admin:false,username:'unknown'}
   clients.push( clientJSON )
   
   console.log('Client *'+clientId+'* connected');
@@ -40,6 +40,12 @@ wss.on('connection', (ws,req) => {
       if(user==='BBM'&&pass==='Mamaw77$'){
         clients[index].admin = true
       }
+    }
+    else if(message.startsWith('username-')){
+      var user = message.split('-')[1];
+      // websocketReason = reason
+      var index = findIndexId(clients,clientId);
+      clients[index].username = user
     }
     else{
       // console.log(message);
