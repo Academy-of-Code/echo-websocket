@@ -50,8 +50,7 @@ function ChatApp1(msg,client,clientID){
   var clientMessage = msg.split('-')[1];
   clients.forEach(function each(clientA) {
     if(clientA.reason==='ChatApp1'){
-      clientA.socketClient.send( clientMessage );
-      client.send(msg)
+      clientA.socketClient.send( JSON.stringify([clientMessage]) );
     }
     else{}
   });
