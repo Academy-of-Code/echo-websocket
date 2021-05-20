@@ -58,6 +58,9 @@ wss.on('connection', (ws,req) => {
   
   ws.on('close', function close() {
     console.log('Client *'+clientId+'* disconnected')
+    if(clientJSON.reason==='ChatApp1'){
+      ChatApp1(client.username+' has left!',client,client.id,':::wss://multi-tool-websocket.heroku.app','Server')
+    }
   });
   ws.on('pong', heartbeat);
 });
