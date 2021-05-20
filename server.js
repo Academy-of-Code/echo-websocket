@@ -74,7 +74,7 @@ function ChatApp1(msg,client,clientID,ip,usermame){
       else{
         clientA.socketClient.send( JSON.stringify([username,clientMessage]) );
       }
-      console.log( JSON.stringify([clientMessage,ip]) )
+      console.log( JSON.stringify([username,clientMessage,ip]) )
     }
     else{}
   });
