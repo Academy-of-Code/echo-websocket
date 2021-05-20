@@ -64,7 +64,7 @@ wss.on('close', function close() {
   clearInterval(interval);
 })
 
-function ChatApp1(msg,client,clientID,ip,usermame){
+function ChatApp1(msg,client,clientID,ip,username){
   var clientMessage = msg
   clients.forEach(function each(clientA) {
     if(clientA.reason==='ChatApp1'){
