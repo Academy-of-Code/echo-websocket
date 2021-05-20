@@ -47,15 +47,13 @@ wss.on('close', function close() {
 })
 
 function ChatApp1(msg,client,clientID){
-  if( msg.startsWith("SEND_MSG_ALL-") ){
-    var clientMessage = msg.split('-')[1];
-    clients.forEach(function each(clientA) {
-      if(clientA.reason==='ChatApp1'){
-        clientA.socketClient.send( clientMessage );
-      }
-      else{}
-    });
-  }
+  var clientMessage = msg.split('-')[1];
+  clients.forEach(function each(clientA) {
+    if(clientA.reason==='ChatApp1'){
+      clientA.socketClient.send( clientMessage );
+    }
+    else{}
+  });
 }
 
 const interval  = setInterval(function ping() {
