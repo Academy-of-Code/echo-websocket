@@ -64,7 +64,7 @@ wss.on('connection', (ws,req) => {
       // console.log(message);
       if(websocketReason === 'ChatApp1'){ ChatApp1(message,ws,clientId,IP,username); }
       else if(websocketReason === 'Multiplayer-Snakes'){}
-      else if(websocketReason === 'Gameshub-Api'){ httpRequestGameshubApi(message,ws,clientId,IP) }
+      else if(websocketReason === 'Gameshub-Api'){ httpRequestGameshubApi(message,ws,clientId,IP); console.log("Reason recieved") }
     }
   })
   
@@ -87,11 +87,14 @@ function reasonComplete(reason,client){
   else if(reason==='Multiplayer-Snakes'){
     var playerSnake = [{x:150,y:150,dx:5,dy:0}]
   }
+  else if(reason==='Gameshub-Api'){}
 }
 
 function MultiplayerSnakes(msg,client,clientID,ip,username){}
 
 function httpRequestGameshubApi(msg,client,clientId,ip){//method,hostname,path){
+    console.log(msg+"Sent")  
+  
     const customErrorMessage = "404: An Error has occured! -Dev Dillion"
     
     splits = msg.split('-')
