@@ -8,7 +8,7 @@ const https = require('https');
 const PORT = process.env.PORT || 3000;
 const INDEX = '/index.html';
 
-const supportedSockets = ["ChatApp1","Multiplayer-Snakes","Gameshub-Api"]
+const supportedSockets = ["ChatApp1","Multiplayer_Snakes","Gameshub_Api"]
 var clients = []
 
 // Multiplayer-Snakes
@@ -64,8 +64,8 @@ wss.on('connection', (ws,req) => {
     else{
       console.log(message);
       if(websocketReason === 'ChatApp1'){ ChatApp1(message,ws,clientId,IP,username); }
-      else if(websocketReason === 'Multiplayer-Snakes'){}
-      else if(websocketReason === 'Gameshub-Api'){ httpRequestGameshubApi(message,ws,clientId,IP); console.log("Reason recieved") }
+      else if(websocketReason === 'Multiplayer_Snakes'){}
+      else if(websocketReason === 'Gameshub_Api'){ httpRequestGameshubApi(message,ws,clientId,IP); console.log("Reason recieved") }
     }
   })
   
@@ -89,7 +89,7 @@ function reasonComplete(reason,client){
   else if(reason==='Multiplayer-Snakes'){
     var playerSnake = [{x:150,y:150,dx:5,dy:0}]
   }
-  else if(reason==='Gameshub-Api'){ console.log("Gameshub Reason Complete") }
+  else if(reason==='Gameshub_Api'){ console.log("Gameshub Reason Complete") }
 }
 
 function MultiplayerSnakes(msg,client,clientID,ip,username){}
