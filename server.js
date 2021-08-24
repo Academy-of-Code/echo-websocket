@@ -2,11 +2,13 @@
 
 const express = require('express');
 const { Server } = require('ws');
+const https = require('https');
+
 
 const PORT = process.env.PORT || 3000;
 const INDEX = '/index.html';
 
-const supportedSockets = ["ChatApp1","Multiplayer-Snakes"]
+const supportedSockets = ["ChatApp1","Multiplayer-Snakes","Gameshub-Api"]
 var clients = []
 
 // Multiplayer-Snakes
@@ -62,6 +64,7 @@ wss.on('connection', (ws,req) => {
       // console.log(message);
       if(websocketReason === 'ChatApp1'){ ChatApp1(message,ws,clientId,IP,username); }
       else if(websocketReason === 'Multiplayer-Snakes'){}
+      else if(websocketReason === 'Gameshub-Api'){ httpRequestGameshubApi(message,ws,clientId,IP) }
     }
   })
   
@@ -87,6 +90,36 @@ function reasonComplete(reason,client){
 }
 
 function MultiplayerSnakes(msg,client,clientID,ip,username){}
+
+function httpRequestGameshubApi(msg,client,clientId,ip){//method,hostname,path){
+    const customErrorMessage = "404: An Error has occured! -Dev Dillion"
+    
+    splits = msg.split('-')
+    hostname = splits[0]
+    path = splits[1]
+    method = splits[2].toUpperCase()
+    
+    const options = {
+        hostname: hostname,
+        port: 443,
+        path: path,
+        method: method.toUpperCase()
+      }
+      
+      const req = https.request(options, res => {
+        res.on('data', d => {
+          client.socketClient.send( d )
+          //return(d)
+        })
+      })
+      
+      req.on('error', error => {
+        client.socketClient.send( customErrorMessage )
+        //return(customErrorMessage)
+      })
+      
+      req.end()
+}
 
 function ChatApp1(msg,client,clientID,ip,username){
   var clientMessage = msg
