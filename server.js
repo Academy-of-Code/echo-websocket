@@ -62,7 +62,7 @@ wss.on('connection', (ws,req) => {
       console.log(clientId+" has chosen username "+username)
       reasonComplete(clients[index].reason,clients[index])    }
     else{
-      // console.log(message);
+      console.log(message);
       if(websocketReason === 'ChatApp1'){ ChatApp1(message,ws,clientId,IP,username); }
       else if(websocketReason === 'Multiplayer-Snakes'){}
       else if(websocketReason === 'Gameshub-Api'){ httpRequestGameshubApi(message,ws,clientId,IP); console.log("Reason recieved") }
@@ -82,6 +82,7 @@ wss.on('close', function close() {
 })
 
 function reasonComplete(reason,client){
+  console.log(reason,client)
   if(reason==='ChatApp1'){
     ChatApp1(client.username+' has joined!',client,client.id,'wss://multi-tool-websocket.heroku.app','Server')
   }
