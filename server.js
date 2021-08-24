@@ -42,6 +42,7 @@ wss.on('connection', (ws,req) => {
       websocketReason = reason
       var index = findIndexId(clients,clientId);
       clients[index].reason = websocketReason
+      console.log(clientId+" has chosen reason "+websocketReason)
     }
     else if(message.startsWith('admin_li-')){
       var user = message.split('-')[1];
@@ -58,8 +59,8 @@ wss.on('connection', (ws,req) => {
       var index = findIndexId(clients,clientId);
       clients[index].username = user
       username = user
-      reasonComplete(clients[index].reason,clients[index])
-    }
+      console.log(clientId+" has chosen username "+username)
+      reasonComplete(clients[index].reason,clients[index])    }
     else{
       // console.log(message);
       if(websocketReason === 'ChatApp1'){ ChatApp1(message,ws,clientId,IP,username); }
@@ -87,13 +88,13 @@ function reasonComplete(reason,client){
   else if(reason==='Multiplayer-Snakes'){
     var playerSnake = [{x:150,y:150,dx:5,dy:0}]
   }
-  else if(reason==='Gameshub-Api'){}
+  else if(reason==='Gameshub-Api'){ console.log("Gameshub Reason Complete") }
 }
 
 function MultiplayerSnakes(msg,client,clientID,ip,username){}
 
 function httpRequestGameshubApi(msg,client,clientId,ip){//method,hostname,path){
-    console.log(msg+"Sent")  
+    console.log(msg+" Sent")
   
     const customErrorMessage = "404: An Error has occured! -Dev Dillion"
     
