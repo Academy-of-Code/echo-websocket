@@ -82,7 +82,7 @@ wss.on('close', function close() {
 })
 
 function reasonComplete(reason,client){
-  console.log(reason,client)
+  console.log(reason)
   if(reason==='ChatApp1'){
     ChatApp1(client.username+' has joined!',client,client.id,'wss://multi-tool-websocket.heroku.app','Server')
   }
