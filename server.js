@@ -100,9 +100,9 @@ function httpRequestGameshubApi(msg,client,clientId,ip){//method,hostname,path){
     const customErrorMessage = "404: An Error has occured! -Dev Dillion"
     
     var splits = msg.split(';')
-    hostname = splits[0]
-    path = splits[1]
-    method = splits[2].toUpperCase()
+    var hostname = splits[0]
+    var path = splits[1]
+    var method = splits[2].toUpperCase()
     
     const options = {
         hostname: hostname,
