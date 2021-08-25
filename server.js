@@ -113,13 +113,13 @@ function httpRequestGameshubApi(msg,client,clientId,ip){//method,hostname,path){
       
       const req = https.request(options, res => {
         res.on('data', d => {
-          client.socketClient.send( d )
+          client.send( d )
           //return(d)
         })
       })
       
       req.on('error', error => {
-        client.socketClient.send( customErrorMessage )
+        client.send( customErrorMessage )
         //return(customErrorMessage)
       })
       
