@@ -8,7 +8,7 @@ const https = require('https');
 const PORT = process.env.PORT || 3000;
 const INDEX = '/index.html';
 
-const supportedSockets = ["ChatApp1","Multiplayer_Snakes","Gameshub_Api"]
+const supportedSockets = ["ChatApp1","Multiplayer_Snakes","Gameshub_Api","Moon_Trading_Game"]
 var clients = []
 
 // Multiplayer-Snakes
@@ -66,6 +66,7 @@ wss.on('connection', (ws,req) => {
       if(websocketReason === 'ChatApp1'){ ChatApp1(message,ws,clientId,IP,username); }
       else if(websocketReason === 'Multiplayer_Snakes'){}
       else if(websocketReason === 'Gameshub_Api'){ httpRequestGameshubApi(message,ws,clientId,IP); console.log("Reason recieved") }
+      else if(websocketReason === 'Moon_Trading_Game'){ Moon_Trading_Game_onmsg(msg,ws,clientId,IP) }
     }
   })
   
@@ -86,13 +87,49 @@ function reasonComplete(reason,client){
   if(reason==='ChatApp1'){
     ChatApp1(client.username+' has joined!',client,client.id,'wss://multi-tool-websocket.heroku.app','Server')
   }
-  else if(reason==='Multiplayer-Snakes'){
-    var playerSnake = [{x:150,y:150,dx:5,dy:0}]
+  else if(reason==='Gameshub_Api'){}
+  else if(reason==='Moon_Trading_Game'){
+    mtg_startup(client)
   }
-  else if(reason==='Gameshub_Api'){ console.log("Gameshub Reason Complete") }
 }
 
-function MultiplayerSnakes(msg,client,clientID,ip,username){}
+// Moon_Trading_Game
+var moon_interval = 0
+var market = []
+var mtg_clients
+
+function sac(msg){
+  clients.forEach(function each(clientA){
+    if(clientA.reason==="Moon_Trading_Game"){
+      clientA.send(JSON.stringify(msg))
+    }
+  })
+}
+
+function mtg_startup(){
+  console.log(JSON.stringify(client))
+}
+function Moon_Trading_Game_onmsg(msg, client, clientId, clientIp){
+  var msgSplits = msg.split("-")
+  if(msgSplits[0]==="accept"){
+    var marketId = msgSplits[1] || -1
+    if(marketId!=-1){
+      var marketItem = market[marketId] || null
+      if(marketItem!=null){
+
+      }
+    }
+  }
+}
+
+var Moon_Trading_Game_Loop = setInterval(function(){
+  if(moon_interval>=6){
+    moon_interval = 0
+    sac({'type':'reward','amount':1})
+  }
+},10)
+
+// end of Moon_Trading_Game
 
 function httpRequestGameshubApi(msg,client,clientId,ip){//method,hostname,path){
     console.log(msg+" Sent")
