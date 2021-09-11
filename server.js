@@ -120,19 +120,41 @@ function Moon_Trading_Game_onmsg(msg, client, clientId, clientIp){
         for(var i=0;i<mtg_clients.length;i++){
           if(mtg_clients[i].id==clientId){
             mtg_clients[i].misc.push(marketItem)
+            if(marketItem.currency==='moons'){
+              mtg_clients[i].moons -= marketItem.currencyAmmount
+            } else if(marketItem.currency==='mega_moons'){
+              mtg_clients[i].mega_moons -= marketItem.currencyAmmount
+            }
+            for(var x=0;x<mtg_clients.length;x++){
+              if(mtg_clients[x].sellerId==marketItem.sellerId){
+                if(marketItem.currency==='moons'){
+                  mtg_clients[x].moons += marketItem.currencyAmmount
+                } else if(marketItem.currency==='mega_moons'){
+                  mtg_clients[x].mega_moons += marketItem.currencyAmmount
+                }
+              }
+            }
             market.splice(marketId,1)
           }
         }
       }
     }
+  } else if(msgSplits[0]==="sell"){
+    market.push(JSON.parse(msgSplits[1]))
   }
 }
 
 var Moon_Trading_Game_Loop = setInterval(function(){
-  if(moon_interval>=6){
+  moon_interval += 1
+  if(moon_interval>1000){
     moon_interval = 0
     sac({'type':'reward','amount':1})
   }
+  sac({
+    'market': JSON.stringify(market),
+    'clients': JSON.stringify(mtg_clients),
+    'moon_interval': moon_interval
+  })
 },10)
 
 // end of Moon_Trading_Game
