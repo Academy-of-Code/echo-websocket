@@ -149,7 +149,6 @@ var Moon_Trading_Game_Loop = setInterval(function(){
   moon_interval += 1
   if(moon_interval>1000){
     moon_interval = 0
-    sac({'type':'reward','amount':1})
   }
   sac({
     'market': market,
