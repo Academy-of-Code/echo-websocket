@@ -152,8 +152,8 @@ var Moon_Trading_Game_Loop = setInterval(function(){
     sac({'type':'reward','amount':1})
   }
   sac({
-    'market': JSON.stringify(market),
-    'clients': JSON.stringify(mtg_clients),
+    'market': market,
+    'clients': mtg_clients,
     'moon_interval': moon_interval
   })
 },10)
