@@ -75,6 +75,7 @@ wss.on('connection', (ws,req) => {
     if(clientJSON.reason==='ChatApp1'){
       ChatApp1(clientJSON.username+' has left!',clientJSON,clientJSON.id,':::wss://multi-tool-websocket.heroku.app','Server')
     }
+    else if(clientJSON.reason=='Moon_Trading_Game'){mtg_leave(clientJSON)}
   });
   ws.on('pong', heartbeat);
 });
@@ -110,6 +111,14 @@ function sac(msg){
 function mtg_startup(client){
   var clientStringify = JSON.stringify(client)
   mtg_clients.push({'id':client.id,'moons':10,'mega_moons':0,'misc':[]})
+}
+function mtg_leave(clientData){
+  for(var x=0;x<mtg_clients.length;x++){
+    if (mtg_clients[x].id==clientJSON.id){
+      mtg_clients.splice(x,1)
+      break
+    }
+  }
 }
 function Moon_Trading_Game_onmsg(msg, client, clientId, clientIp){
   var msgSplits = msg.split("-")
