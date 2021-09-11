@@ -66,7 +66,7 @@ wss.on('connection', (ws,req) => {
       if(websocketReason === 'ChatApp1'){ ChatApp1(message,ws,clientId,IP,username); }
       else if(websocketReason === 'Multiplayer_Snakes'){}
       else if(websocketReason === 'Gameshub_Api'){ httpRequestGameshubApi(message,ws,clientId,IP); console.log("Reason recieved") }
-      else if(websocketReason === 'Moon_Trading_Game'){ Moon_Trading_Game_onmsg(msg,ws,clientId,IP) }
+      else if(websocketReason === 'Moon_Trading_Game'){ Moon_Trading_Game_onmsg(message,ws,clientId,IP) }
     }
   })
   
@@ -96,7 +96,7 @@ function reasonComplete(reason,client){
 // Moon_Trading_Game
 var moon_interval = 0
 var market = []
-var mtg_clients
+var mtg_clients = []
 
 function sac(msg){
   clients.forEach(function each(clientA){
@@ -107,7 +107,8 @@ function sac(msg){
 }
 
 function mtg_startup(client){
-  console.log(JSON.stringify(client))
+  var clientStringify = JSON.stringify(client)
+  mtg_clients.push({'id':client.id,'moons':10,'mega_moons':0,'misc':[]})
 }
 function Moon_Trading_Game_onmsg(msg, client, clientId, clientIp){
   var msgSplits = msg.split("-")
@@ -116,7 +117,12 @@ function Moon_Trading_Game_onmsg(msg, client, clientId, clientIp){
     if(marketId!=-1){
       var marketItem = market[marketId] || null
       if(marketItem!=null){
-
+        for(var i=0;i<mtg_clients.length;i++){
+          if(mtg_clients[i].id==clientId){
+            mtg_clients[i].misc.push(marketItem)
+            market.splice(marketId,1)
+          }
+        }
       }
     }
   }
