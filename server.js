@@ -106,7 +106,7 @@ function sac(msg){
   })
 }
 
-function mtg_startup(){
+function mtg_startup(client){
   console.log(JSON.stringify(client))
 }
 function Moon_Trading_Game_onmsg(msg, client, clientId, clientIp){
