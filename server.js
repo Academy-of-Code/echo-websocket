@@ -99,11 +99,12 @@ var market = []
 var mtg_clients = []
 
 function sac(msg){
-  clients.forEach(function each(clientA){
-    if(clientA.reason==="Moon_Trading_Game"){
-      clientA.send(JSON.stringify(msg))
+  clients.forEach(function each(clientA) {
+    if(clientA.reason==='Moon_Trading_Game'){
+      clientA.socketClient.send( JSON.stringify(msg) );
     }
-  })
+    else{}
+  });
 }
 
 function mtg_startup(client){
