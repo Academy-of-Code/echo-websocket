@@ -114,7 +114,7 @@ function mtg_startup(client){
 }
 function mtg_leave(clientData){
   for(var x=0;x<mtg_clients.length;x++){
-    if (mtg_clients[x].id==clientJSON.id){
+    if (mtg_clients[x].id==clientData.id){
       mtg_clients.splice(x,1)
       break
     }
