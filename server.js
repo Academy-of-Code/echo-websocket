@@ -6,7 +6,7 @@ const https = require('https');
 
 const mineflayer = require('mineflayer')
 const { pathfinder, Movements, goals } = require('mineflayer-pathfinder')
-
+const { mineflayer: minelfayerViewer } = require('prismarine-viewer')
 
 const PORT = process.env.PORT || 3000;
 const INDEX = '/index.html';
@@ -126,9 +126,10 @@ function mcBots(message,client,clientId,IP){
   if (hasBot==false){
     var botUsername = message.split("~")[0]
     var botIP = message.split("~")[1]
+    var botViewPort = message.split("~")[2]
     var botPort = "NoPort"
     try{
-      botPort = message.split("~")[2]
+      botPort = message.split("~")[3]
     } catch (err){
       botPort = "NoPort"
     }
@@ -138,6 +139,7 @@ function mcBots(message,client,clientId,IP){
     if(botPort!="NoPort"){
       botStruc = {
         owner: client,
+        viewerPort: botViewPort,
         minecraftBot: mineflayer.createBot({
           host: botIP,
           port: botPort,
