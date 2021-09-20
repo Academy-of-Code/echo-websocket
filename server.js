@@ -165,6 +165,7 @@ function mcBots(message,client,clientId,IP){
       for(var x=0;x<bots.length;x++){
         var currentBot = bots[x]
         if (currentBot.owner == client){
+          currentBot.minecraftBot.end()
           bots.slice(bots.indexOf(currentBot))
           x = bots.length
           break
