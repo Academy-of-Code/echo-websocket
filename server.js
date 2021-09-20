@@ -165,12 +165,6 @@ function mcBots(message,client,clientId,IP){
           bots.slice(bots.indexOf(currentBot))
         }
       }
-    } else if(message=="getBots"){
-      var botArr = []
-      for (bot in bots){
-        botArr.push(bot.user.username)
-      }
-      sacMC(JSON.stringify(botArr))
     }
   }
 }
