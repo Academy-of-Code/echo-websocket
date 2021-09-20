@@ -113,8 +113,14 @@ function sacMC(msg){
 }
 
 function mcBots(message,client,clientId,IP){
-  if (client.hasBot==false){
-    client.send("BBB")
+  var hasBot = false
+  for(bot in bots){
+    if (bot.owner==client){
+      hasBot = true
+    }
+  }
+
+  if (hasBot==false){
     var botUsername = message.split("~")[0]
     var botIP = message.split("~")[1]
 
@@ -129,7 +135,6 @@ function mcBots(message,client,clientId,IP){
     client.hasBot = true
     sacMC(botUsername+' has joined us!')
   } else{
-    console.log(toString(client.hasBot))
     if(message=="leaveMinecraft"){
       for(bot in bots){
         if (bot.owner==client){
