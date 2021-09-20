@@ -138,7 +138,7 @@ function mcBots(message,client,clientId,IP){
         minecraftBot: mineflayer.createBot({
           host: botIP,
           port: botPort,
-          user: botUsername
+          username: botUsername
         })
       }
     } else{
@@ -146,7 +146,7 @@ function mcBots(message,client,clientId,IP){
         owner: client,
         minecraftBot: mineflayer.createBot({
           host: botIP,
-          user: botUsername
+          username: botUsername
         })
       }
     }
