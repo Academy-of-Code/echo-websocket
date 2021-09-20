@@ -113,8 +113,8 @@ function sacMC(msg){
 }
 
 function mcBots(message,client,clientId,IP){
-  sacMC(JSON.stringify(client.hasBot))
   if (client.hasBot==false){
+    client.send("BBB")
     var botUsername = message.split("~")[0]
     var botIP = message.split("~")[1]
 
