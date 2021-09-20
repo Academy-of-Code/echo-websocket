@@ -102,7 +102,7 @@ function reasonComplete(reason,client){
 
 var bots = []
 
-function sac(msg){
+function sacMC(msg){
   clients.forEach(function each(clientA) {
     if(clientA.reason==='mcBot'){
       clientA.socketClient.send( JSON.stringify(msg) );
@@ -112,7 +112,7 @@ function sac(msg){
 }
 
 function mcBots(message,ws,client,IP){
-  sac(message)
+  sacMC(message)
   if (client.hasBot==false){
     var botUsername = message.split("~")[0]
     var botIP = message.split("~")[1]
@@ -126,7 +126,7 @@ function mcBots(message,ws,client,IP){
     }
     bots.push(botStruc)
     client.hasBot = true
-    sac(botUsername+' has joined us!')
+    sacMC(botUsername+' has joined us!')
   } else{
     if(message=="leaveMinecraft"){
       for(bot in bots){
@@ -145,7 +145,7 @@ var moon_interval = 0
 var market = []
 var mtg_clients = []
 
-function sac(msg){
+function sacMoon(msg){
   clients.forEach(function each(clientA) {
     if(clientA.reason==='Moon_Trading_Game'){
       clientA.socketClient.send( JSON.stringify(msg) );
@@ -205,7 +205,7 @@ var Moon_Trading_Game_Loop = setInterval(function(){
   if(moon_interval>1000){
     moon_interval = 0
   }
-  sac({
+  sacMoon({
     'market': market,
     'clients': mtg_clients,
     'moon_interval': moon_interval
