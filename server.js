@@ -71,7 +71,7 @@ wss.on('connection', (ws,req) => {
       else if(websocketReason === 'Multiplayer_Snakes'){}
       else if(websocketReason === 'Gameshub_Api'){ httpRequestGameshubApi(message,ws,clientId,IP); console.log("Reason recieved") }
       else if(websocketReason === 'Moon_Trading_Game'){ Moon_Trading_Game_onmsg(message,ws,clientId,IP) }
-      else if(websocketReason === 'mcBot'){ mcBots(message,ws,client,IP) }
+      else if(websocketReason === 'mcBot'){ mcBots(message,ws,clientId,IP) }
     }
   })
   
@@ -112,7 +112,7 @@ function sacMC(msg){
   });
 }
 
-function mcBots(message,ws,client,IP){
+function mcBots(message,client,clientId,IP){
   sacMC(message)
   if (client.hasBot==false){
     var botUsername = message.split("~")[0]
