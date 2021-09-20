@@ -159,9 +159,10 @@ function mcBots(message,client,clientId,IP){
     sacMC(botUsername+' has joined us!')
   } else{
     if(message=="leaveMinecraft"){
-      for(bot in bots){
-        if (bot.owner==client){
-          bots.slice(bots.indexOf(bot))
+      for(var x=0;x<bots.length;x++){
+        var currentBot = bots[x]
+        if (currentBot.owner == client){
+          bots.slice(bots.indexOf(currentBot))
         }
       }
     } else if(message=="getBots"){
