@@ -81,7 +81,7 @@ wss.on('connection', (ws,req) => {
       ChatApp1(clientJSON.username+' has left!',clientJSON,clientJSON.id,':::wss://multi-tool-websocket.heroku.app','Server')
     }
     else if(clientJSON.reason=='Moon_Trading_Game'){mtg_leave(clientJSON)}
-    else if(clientJSON.reason=='mcBot'){mcBots("leaveMinecraft",ws,client,IP)}
+    else if(clientJSON.reason=='mcBot'){mcBots("leaveMinecraft",ws,clientId,IP)}
   });
   ws.on('pong', heartbeat);
 });
