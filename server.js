@@ -122,7 +122,7 @@ function mcBots(message,client,clientId,IP){
       owner: client,
       minecraftBot: mineflayer.createBot({
         host: botIP,
-        username: botUsername
+        user: botUsername
       })
     }
     bots.push(botStruc)
@@ -135,6 +135,12 @@ function mcBots(message,client,clientId,IP){
           bots.slice(bots.indexOf(bot))
         }
       }
+    } else if(message=="getBots"){
+      var botArr = []
+      for (bot in bots){
+        botArr.push(bot.user.username)
+      }
+      sacMC(JSON.stringify(botArr))
     }
   }
 }
