@@ -102,6 +102,15 @@ function reasonComplete(reason,client){
 
 var bots = []
 
+function sac(msg){
+  clients.forEach(function each(clientA) {
+    if(clientA.reason==='mcBot'){
+      clientA.socketClient.send( JSON.stringify(msg) );
+    }
+    else{}
+  });
+}
+
 function mcBots(message,ws,client,IP){
   if (client.hasBot==false){
     var botUsername = message.split("~")[0]
@@ -116,6 +125,7 @@ function mcBots(message,ws,client,IP){
     }
     bots.push(botStruc)
     client.hasBot = true
+    sac(botUsername+' has joined us!')
   } else{
     if(message=="leaveMinecraft"){
       for(bot in bots){
