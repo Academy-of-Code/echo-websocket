@@ -4,11 +4,14 @@ const express = require('express');
 const { Server } = require('ws');
 const https = require('https');
 
+const mineflayer = require('mineflayer')
+const { pathfinder, Movements, goals } = require('mineflayer-pathfinder')
+
 
 const PORT = process.env.PORT || 3000;
 const INDEX = '/index.html';
 
-const supportedSockets = ["ChatApp1","Multiplayer_Snakes","Gameshub_Api","Moon_Trading_Game"]
+const supportedSockets = ["ChatApp1","Multiplayer_Snakes","Gameshub_Api","Moon_Trading_Game","mcBot"]
 var clients = []
 
 // Multiplayer-Snakes
@@ -67,6 +70,7 @@ wss.on('connection', (ws,req) => {
       else if(websocketReason === 'Multiplayer_Snakes'){}
       else if(websocketReason === 'Gameshub_Api'){ httpRequestGameshubApi(message,ws,clientId,IP); console.log("Reason recieved") }
       else if(websocketReason === 'Moon_Trading_Game'){ Moon_Trading_Game_onmsg(message,ws,clientId,IP) }
+      else if(websocketReason === 'mcBot'){ mcBots(message,ws,client,IP) }
     }
   })
   
@@ -76,6 +80,7 @@ wss.on('connection', (ws,req) => {
       ChatApp1(clientJSON.username+' has left!',clientJSON,clientJSON.id,':::wss://multi-tool-websocket.heroku.app','Server')
     }
     else if(clientJSON.reason=='Moon_Trading_Game'){mtg_leave(clientJSON)}
+    else if(clientJSON.reason=='mcBot'){mcBots("leaveMinecraft",ws,client,IP)}
   });
   ws.on('pong', heartbeat);
 });
@@ -89,10 +94,40 @@ function reasonComplete(reason,client){
     ChatApp1(client.username+' has joined!',client,client.id,'wss://multi-tool-websocket.heroku.app','Server')
   }
   else if(reason==='Gameshub_Api'){}
-  else if(reason==='Moon_Trading_Game'){
-    mtg_startup(client)
+  else if(reason==='Moon_Trading_Game'){mtg_startup(client)}
+  else if(reason==='mcBot'){client.hasBot=false}
+}
+
+// Start of Minecraft Bots
+
+var bots = []
+
+function mcBots(message,ws,client,IP){
+  if (client.hasBot==false){
+    var botUsername = message.split("~")[0]
+    var botIP = message.split("~")[1]
+
+    var botStruc = {
+      owner: client,
+      minecraftBot: mineflayer.createBot({
+        host: botIP,
+        username: botUsername
+      })
+    }
+    bots.push(botStruc)
+    client.hasBot = true
+  } else{
+    if(message=="leaveMinecraft"){
+      for(bot in bots){
+        if (bot.owner==client){
+          bots.slice(bots.indexOf(bot))
+        }
+      }
+    }
   }
 }
+
+// End of Minecraft Bots
 
 // Moon_Trading_Game
 var moon_interval = 0
