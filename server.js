@@ -135,6 +135,8 @@ function mcBots(message,client,clientId,IP){
       botPort = "NoPort"
     }
 
+    console.log(botPort)
+
     var botStruc
 
     if(botPort!="NoPort"){
