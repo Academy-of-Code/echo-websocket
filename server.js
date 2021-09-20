@@ -40,6 +40,7 @@ wss.on('connection', (ws,req) => {
   
   console.log('Client *'+clientId+'* connected');
   ws.on('message', function incoming(message) {
+    console.log(message)
     if(message.startsWith('REASON-')){
       var reason = message.split('-')[1];
       websocketReason = reason
