@@ -96,7 +96,6 @@ function reasonComplete(reason,client){
   }
   else if(reason==='Gameshub_Api'){}
   else if(reason==='Moon_Trading_Game'){mtg_startup(client)}
-  else if(reason==='mcBot'){}
 }
 
 // Start of Minecraft Bots
@@ -158,13 +157,15 @@ function mcBots(message,client,clientId,IP){
 
     bots.push(botStruc)
     client.hasBot = true
-    sacMC(botUsername+' has joined us!')
+    client.send("You bot has sent a join request to the server!")
   } else{
     if(message=="leaveMinecraft"){
       for(var x=0;x<bots.length;x++){
         var currentBot = bots[x]
         if (currentBot.owner == client){
           bots.slice(bots.indexOf(currentBot))
+          x = bots.length
+          break
         }
       }
     }
