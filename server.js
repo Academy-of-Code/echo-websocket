@@ -126,9 +126,11 @@ function mcBots(message,client,clientId,IP){
   if (hasBot==false){
     var botUsername = message.split("~")[0]
     var botIP = message.split("~")[1]
+    var botViewPort = message.split("~")[2]
+
     var botPort = "NoPort"
     try{
-      botPort = message.split("~")[2]
+      botPort = message.split("~")[3]
     } catch (err){
       botPort = "NoPort"
     }
