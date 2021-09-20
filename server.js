@@ -114,9 +114,12 @@ function sacMC(msg){
 
 function mcBots(message,client,clientId,IP){
   var hasBot = false
-  for(currentBot in bots){
-    if (currentBot.owner==client){
+  for(var x=0;x<bots.length;x++){
+    var currentBot = bots[x]
+    if (currentBot.owner == client){
       hasBot = true
+      x = bots.length
+      break
     }
   }
 
