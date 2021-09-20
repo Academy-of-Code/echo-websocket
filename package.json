@@ -1,27 +1,23 @@
 {
-  "name": "gameshub-websockets",
+  "name": "websockets-vanilla",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.x"
+  },
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/BoomBoomMushroom/gameshub-websockets.git"
-  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/BoomBoomMushroom/gameshub-websockets/issues"
-  },
-  "homepage": "https://github.com/BoomBoomMushroom/gameshub-websockets#readme",
   "dependencies": {
+    "bufferutil": "^4.0.1",
     "express": "^4.17.1",
-    "https": "^1.0.0",
+    "utf-8-validate": "^5.0.2",
+    "ws": "^7.2.0",
     "mineflayer": "^3.11.1",
-    "mineflayer-pathfinder": "^1.7.0",
-    "ws": "^8.2.2"
+    "mineflayer-pathfinder": "^1.7.0"
   }
 }
