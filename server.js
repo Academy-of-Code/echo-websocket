@@ -123,14 +123,34 @@ function mcBots(message,client,clientId,IP){
   if (hasBot==false){
     var botUsername = message.split("~")[0]
     var botIP = message.split("~")[1]
-
-    var botStruc = {
-      owner: client,
-      minecraftBot: mineflayer.createBot({
-        host: botIP,
-        user: botUsername
-      })
+    var botPort = "NoPort"
+    try{
+      botPort = message.split("~")[2]
+    } catch (err){
+      botPort = "NoPort"
     }
+
+    var botStruc
+
+    if(botPort!="NoPort"){
+      botStruc = {
+        owner: client,
+        minecraftBot: mineflayer.createBot({
+          host: botIP,
+          port: botPort,
+          user: botUsername
+        })
+      }
+    } else{
+      var botStruc = {
+        owner: client,
+        minecraftBot: mineflayer.createBot({
+          host: botIP,
+          user: botUsername
+        })
+      }
+    }
+
     bots.push(botStruc)
     client.hasBot = true
     sacMC(botUsername+' has joined us!')
