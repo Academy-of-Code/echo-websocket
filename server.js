@@ -131,35 +131,29 @@ function mcBots(message,client,clientId,IP){
     try{
       botPort = message.split("~")[3]
     } catch (err){
-      botPort = "NoPort"
+      botPort = " "
     }
 
     console.log(botPort)
 
-    var botStruc
+    const bot = mineflayer.createBot({
+      host: botIP,
+      port: botPort,
+      username: botUsername
+    })
 
-    if(botPort!="NoPort"){
-      botStruc = {
-        owner: client,
-        minecraftBot: mineflayer.createBot({
-          host: botIP,
-          port: botPort,
-          username: botUsername
-        })
-      }
-    } else{
+    bot.on('spawn', ()=>{
       var botStruc = {
         owner: client,
-        minecraftBot: mineflayer.createBot({
-          host: botIP,
-          username: botUsername
-        })
+        minecraftBot: bot
       }
-    }
 
-    bots.push(botStruc)
-    client.hasBot = true
-    client.send("You bot has sent a join request to the server!")
+      // mineflayerViewer(bot,{port:botViewPort}) // "firstPerson: true" if needed
+
+      bots.push(botStruc)
+      client.hasBot = true
+      client.send("You bot has joined the server!")
+    })
   } else{
     if(message=="leaveMinecraft"){
       for(var x=0;x<bots.length;x++){
