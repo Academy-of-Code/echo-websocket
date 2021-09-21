@@ -141,19 +141,15 @@ function mcBots(message,client,clientId,IP){
       port: botPort,
       username: botUsername
     })
+    var botStruc = {
+      owner: client,
+      minecraftBot: bot
+    }
+    mineflayerViewer(bot,{port:botViewPort}) // "firstPerson: true" if needed
+    bots.push(botStruc)
+    client.hasBot = true
 
-    bot.on('spawn', ()=>{
-      var botStruc = {
-        owner: client,
-        minecraftBot: bot
-      }
-
-      // mineflayerViewer(bot,{port:botViewPort}) // "firstPerson: true" if needed
-
-      bots.push(botStruc)
-      client.hasBot = true
-      client.send("You bot has joined the server!")
-    })
+    bot.on('spawn', ()=>{client.send("event-spawn")})
   } else{
     if(message=="leaveMinecraft"){
       for(var x=0;x<bots.length;x++){
