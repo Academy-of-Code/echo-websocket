@@ -149,7 +149,18 @@ function mcBots(message,client,clientId,IP){
     bots.push(botStruc)
     client.hasBot = true
 
-    bot.on('spawn', ()=>{client.send("event-spawn")})
+    var seperator = "Σ"
+
+    bot.on('blockUpdate',(oldBlock,newBlock)=>{client.send(`eventΣblockUpdateΣ`+JSON.stringify(oldBlock)+seperator+JSON.stringify(newBlock))})
+    bot.on('breath',()=>{client.send("eventΣbreath")})
+    bot.on('chat',(username,message)=>{client.send("eventΣchatΣ"+username+seperator+message)})
+    bot.on('death',()=>{client.send("eventΣdeath")})
+    bot.on('end',()=>{client.send("eventΣend")})
+    bot.on('physicTick',()=>{client.send("eventΣphysicTick")})
+    bot.on('physicsTick',()=>{client.send("eventΣphysicsTick")})
+    bot.on('spawn', ()=>{client.send("eventΣspawn")})
+    bot.on('itemDrop',(entity)=>{client.send("eventΣitemDrop")})
+    bot.on('playerCollect',(collector,collected)=>{client.send("eventΣplayerCollectΣ"+JSON.stringify(collector)+seperator+JSON.stringify(collected))})
   } else{
     if(message=="leaveMinecraft"){
       for(var x=0;x<bots.length;x++){
