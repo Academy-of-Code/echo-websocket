@@ -6,6 +6,7 @@ const https = require('https');
 
 const mineflayer = require('mineflayer')
 const { pathfinder, Movements, goals } = require('mineflayer-pathfinder')
+const { mineflayer: mineflayerViewer } = require("prismarine-viewer");
 
 
 const PORT = process.env.PORT || 3000;
