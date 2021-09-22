@@ -180,6 +180,8 @@ function mcBots(message,client,clientId,IP){
         var currentBotData = bots[x]
         if(currentBotData.owner==client){
           bot = currentBotData
+          console.log("BOT FOUND")
+          console.log("BOT POS: "+bot.entity.position)
           break
         }
       }
