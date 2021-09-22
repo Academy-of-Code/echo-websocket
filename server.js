@@ -208,7 +208,7 @@ function mcBots(message,client,clientId,IP){
         const posX = parseInt(posRaw.split("_")[0])
         const posY = parseInt(posRaw.split("_")[1])
         const posZ = parseInt(posRaw.split("_")[2])
-        bot.pathfinder.setGoal(new GoalNear(posX,posY,posZ),false)
+        bot.pathfinder.setGoal(new goals.GoalNear(posX,posY,posZ),false)
       }
     }
   }
