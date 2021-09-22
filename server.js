@@ -179,8 +179,8 @@ function mcBots(message,client,clientId,IP){
       for(var x=0;x<bots.length;x++){
         var currentBotData = bots[x]
         if(currentBotData.owner==client){
-          bot = currentBotData
-          console.log("BOT FOUND")
+          bot = currentBotData.minecraftBot
+          bot.chat("BOT FOUND")
           console.log("BOT POS: "+bot.entity.position)
           break
         }
