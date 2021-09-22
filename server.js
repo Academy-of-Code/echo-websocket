@@ -173,6 +173,25 @@ function mcBots(message,client,clientId,IP){
           break
         }
       }
+    } else if(message.startsWith("request")){
+      const request = message.split(" ")[1]
+      var bot
+      for(var x=0;x<bots.length;x++){
+        var currentBotData = bots[x]
+        if(currentBotData.owner==client){
+          bot = currentBotData
+          break
+        }
+      }
+
+      if(request=="botPosition"){
+        var pos = {
+          x: bot.entity.position.x,
+          y: bot.entity.position.y,
+          z: bot.entity.position.z
+        }
+        client.send("request-"+JSON.stringify(pos))
+      }
     }
   }
 }
