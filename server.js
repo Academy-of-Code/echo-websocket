@@ -6,7 +6,8 @@ const https = require('https');
 
 const mineflayer = require('mineflayer')
 const { pathfinder, Movements, goals } = require('mineflayer-pathfinder')
-const { mineflayer: mineflayerViewer } = require('prismarine-viewer')
+const { mineflayer: mineflayerViewer } = require('prismarine-viewer');
+const mcdata = require('mcdata');
 
 
 const PORT = process.env.PORT || 3000;
@@ -146,6 +147,7 @@ function mcBots(message,client,clientId,IP){
       owner: client,
       minecraftBot: bot
     }
+    bot.loadPlugin(pathfinder)
     mineflayerViewer(bot,{port:botViewPort}) // "firstPerson: true" if needed
     bots.push(botStruc)
     client.hasBot = true
@@ -180,11 +182,16 @@ function mcBots(message,client,clientId,IP){
         var currentBotData = bots[x]
         if(currentBotData.owner==client){
           bot = currentBotData.minecraftBot
-          bot.chat("BOT FOUND")
-          console.log("BOT POS: "+bot.entity.position)
           break
         }
       }
+
+      /*
+      GET CARDINALS
+      let getCardinal = (degrees) => ["N", "NE", "E", "SE", "S", "SW", "W", "NW"][(degrees / 45) & 0x7]
+      let degrees = (radians * 180 / Math.PI) - 180
+      let cardinal = getCardinal(degrees)
+      */
 
       if(request=="botPosition"){
         var pos = {
@@ -193,6 +200,15 @@ function mcBots(message,client,clientId,IP){
           z: bot.entity.position.z
         }
         client.send("request-"+JSON.stringify(pos))
+      } else if(request=="moveTo"){
+        const mcData = require('minecraft-pathfinder')(bot.version)
+        const movements = new Movements(bot, mcData)
+        bot.pathfinder.setMovements(movements)
+        const posRaw = message.split(" ")[2]
+        const posX = int(posRaw.split("_")[0])
+        const posY = int(posRaw.split("_")[1])
+        const posZ = int(posRaw.split("_")[2])
+        bot.pathfinder.setGoal(new GoalNear(posX,posY,posZ),false)
       }
     }
   }

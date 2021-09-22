@@ -16,6 +16,7 @@
     "bufferutil": "^4.0.1",
     "express": "^4.17.1",
     "mcdata": "^1.0.9",
+    "minecraft-data": "^2.93.0",
     "mineflayer": "^3.11.1",
     "mineflayer-pathfinder": "^1.7.0",
     "prismarine-viewer": "^1.20.0",
