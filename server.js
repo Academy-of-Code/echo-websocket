@@ -205,9 +205,9 @@ function mcBots(message,client,clientId,IP){
         const movements = new Movements(bot, mcData)
         bot.pathfinder.setMovements(movements)
         const posRaw = message.split(" ")[2]
-        const posX = posRaw.split("_")[0].parseInt()
-        const posY = posRaw.split("_")[1].parseInt()
-        const posZ = posRaw.split("_")[2].parseInt()
+        const posX = parseInt(posRaw.split("_")[0])
+        const posY = parseInt(posRaw.split("_")[1])
+        const posZ = parseInt(posRaw.split("_")[2])
         bot.pathfinder.setGoal(new GoalNear(posX,posY,posZ),false)
       }
     }
