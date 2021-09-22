@@ -201,7 +201,7 @@ function mcBots(message,client,clientId,IP){
         }
         client.send("request-"+JSON.stringify(pos))
       } else if(request=="moveTo"){
-        const mcData = require('minecraft-pathfinder')(bot.version)
+        const mcData = require('minecraft-data')(bot.version)
         const movements = new Movements(bot, mcData)
         bot.pathfinder.setMovements(movements)
         const posRaw = message.split(" ")[2]
