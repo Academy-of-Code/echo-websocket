@@ -13,11 +13,13 @@ const server = express()
 const wss = new Server({ server });
 
 var playersArr = []
+var currentMap = []
 
 wss.on('connection', (ws) => {
   ws.isAlive = true;
   var clientId = randomId(16);
-  playersArr.push( {x:0,y:0,id:clientId} );
+  playersArr.push( {x:0,y:0,id:clientId,color:"#000000"} );
+  var index = playersArr.findIndex(function(item,i){return item.id===clientId})
   
   console.log( JSON.stringify(playersArr) );
   
@@ -25,7 +27,6 @@ wss.on('connection', (ws) => {
   ws.on('message', function incoming(message) {
     if(message.startsWith('NAME')){
       var name = message.split('-')[1];
-      var index = playersArr.findIndex(function(item,i){return item.id===clientId})
       playersArr[index].name=name
       console.log('Client *'+clientId+'* has chosen its name and it is: '+name)
     }
@@ -45,7 +46,19 @@ wss.on('connection', (ws) => {
       var index = playersArr.findIndex(function(item,i){return item.id===clientId})
       playersArr[index].x+=5
     }
+    if(playersArr[index].x>300){playersArr[index].x=0}
+    if(playersArr[index].x<0){playersArr[index].x=300}
+    if(playersArr[index].y>300){playersArr[index].y=0}
+    if(playersArr[index].y<0){playersArr[index].y=300}
+    currentMap.forEach(block=>{
+      if(block.x==playersArr[index].x&&block.y==playersArr[index].y){
+        playersArr[index].x = 0
+        playersArr[index].y = 0
+      }
+    })
+    
     ws.send( JSON.stringify(playersArr) )
+    ws.send( "map-"+JSON.stringify(currentMap) )
   })
   
   ws.on('close', function close() {
