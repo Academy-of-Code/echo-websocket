@@ -18,17 +18,22 @@ var currentMap = []
 wss.on('connection', (ws) => {
   ws.isAlive = true;
   var clientId = randomId(16);
-  playersArr.push( {x:0,y:0,id:clientId,color:"#000000"} );
-  var index = playersArr.findIndex(function(item,i){return item.id===clientId})
+  playersArr.push({x:0,y:0,id:clientId,color:"#000000"});
   
   console.log( JSON.stringify(playersArr) );
   
   console.log('Client *'+clientId+'* connected');
-  ws.on('message', function incoming(message) {
+  ws.on('message', function incoming(msg) {
+    var message = msg.toString()
+    var index = getPlayerIndex(clientId)
     if(message.startsWith('NAME')){
       var name = message.split('-')[1];
       playersArr[index].name=name
       console.log('Client *'+clientId+'* has chosen its name and it is: '+name)
+    }
+    else if(message.startsWith('COLOR')){
+      var color = message.split('-')[1]
+      playersArr[index].color = color
     }
     else if(message==='RES-MOVE_UP'){
       var index = playersArr.findIndex(function(item,i){return item.id===clientId})
@@ -50,8 +55,7 @@ wss.on('connection', (ws) => {
     if(playersArr[index].x<0){playersArr[index].x=300}
     if(playersArr[index].y>300){playersArr[index].y=0}
     if(playersArr[index].y<0){playersArr[index].y=300}
-    currentMap.forEach(block=>{
-      if(block.x==playersArr[index].x&&block.y==playersArr[index].y){
+    currentMap.forEach(block=>{ if(block.x==playersArr[index].x&&block.y==playersArr[index].y){
         playersArr[index].x = 0
         playersArr[index].y = 0
       }
@@ -85,6 +89,13 @@ const interval  = setInterval(function ping() {
     ws.ping(noop);
   });
 }, 30000);
+function getPlayerIndex(id){
+  for(var i=0;i<playersArr.length;i++){
+    if(playersArr[i].id==id){
+      return i
+    }
+  }
+}
 function randomId(length) {
     var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'.split('');
 
